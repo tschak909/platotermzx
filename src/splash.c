@@ -2,6 +2,7 @@
 
 padByte splash[] = 
 {
+  0x1B,
  0x02,
 0X1B,
 0X0C,
@@ -1285,5 +1286,5 @@ padByte splash[] =
  0x03
 };
 
-short splash_size = 1281;
+short splash_size = 1282;
 

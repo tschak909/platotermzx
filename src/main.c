@@ -9,12 +9,13 @@ unsigned char already_started=0;
 void main(void)
 {
   screen_init();
-  ShowPLATO(splash,1343);
+  terminal_init();
+  ShowPLATO(splash,1282);
   terminal_initial_position();
-  /* io_init(); */
+  io_init();
   for (;;)
     {
       /* keyboard_main(); */
-      /* io_main(); */
+      io_main();
     }
 }
