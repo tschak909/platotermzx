@@ -54,9 +54,9 @@ void keyboard_out_tty(char ch)
  */
 void keyboard_main(void)
 {
-  if (kbhit())
+  ch=getk();
+  if (ch!=0x00)
     {
-      ch=getch();
       if (is_escape==1 && ch==0x1B) // ESC
 	{
 	  screen_beep();
