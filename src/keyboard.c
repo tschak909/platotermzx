@@ -76,7 +76,7 @@ void keyboard_main(void)
 	  zx_border(INK_GREEN);
 	  keyboard_out(extend_key_to_pkey[ch]);
 	  is_extend=0;
-	  zx_border(INK_WHITE);
+	  zx_border(INK_BLACK);
 	}
       else
 	{
