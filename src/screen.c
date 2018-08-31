@@ -1,11 +1,15 @@
 
 #include <graphics.h>
+#include <spectrum.h>
 #include "screen.h"
 #include "protocol.h"
 
 unsigned char CharWide=8;
 unsigned char CharHigh=16;
 padPt TTYLoc;
+long foregroundColor;
+long backgroundColor;
+
 extern padBool FastText; /* protocol.c */
 extern unsigned short scalex[];
 extern unsigned short scaley[];
@@ -15,6 +19,7 @@ extern unsigned char fontm23[];
 extern unsigned short fontptr[];
 extern unsigned char FONT_SIZE_X;
 extern unsigned char FONT_SIZE_Y;
+
 
 void bx(int x1, int y1, int x2, int y2)
 {
@@ -96,7 +101,7 @@ void screen_line_draw(padPt* Coord1, padPt* Coord2)
   unsigned short x2=scalex[Coord2->x];
   unsigned short y1=scaley[Coord1->y];
   unsigned short y2=scaley[Coord2->y];
-  
+
   if (CurMode==ModeErase || CurMode==ModeInverse)
     undraw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
   else
@@ -348,6 +353,92 @@ void screen_tty_char(padByte theChar)
     TTYLoc.y=495;
   }
 
+}
+
+/**
+ * screen_foreground - Set foreground
+ */
+void screen_foreground(padRGB* theColor)
+{
+  unsigned char red=theColor->red;
+  unsigned char green=theColor->green;
+  unsigned char blue=theColor->blue;
+  
+  if (red==0 && green==0 && blue==0)
+    {
+      foregroundColor=INK_BLACK;
+    }
+  else if (red==0 && green==0 && blue==255)
+    {
+      foregroundColor=INK_BLUE;
+    }
+  else if (red==0 && green==255 && blue==0)
+    {
+      foregroundColor=INK_GREEN;
+    }
+  else if (red==255 && green==0 && blue==0)
+    {
+      foregroundColor=INK_RED;
+    }
+  else if (red==0 && green==255 && blue==255)
+    {
+      foregroundColor=INK_CYAN;
+    }
+  else if (red==255 && green==0 && blue==255)
+    {
+      foregroundColor=INK_MAGENTA;
+    }
+  else if (red==255 && green==255 && blue==0)
+    {
+      foregroundColor=INK_YELLOW;
+    }
+  else
+    {
+      foregroundColor=INK_WHITE;
+    }
+}
+
+/**
+ * screen_background - Set Background
+ */
+void screen_background(padRGB* theColor)
+{
+  unsigned char red=theColor->red;
+  unsigned char green=theColor->green;
+  unsigned char blue=theColor->blue;
+  
+  if (red==0 && green==0 && blue==0)
+    {
+      backgroundColor=PAPER_BLACK;
+    }
+  else if (red==0 && green==0 && blue==255)
+    {
+      backgroundColor=PAPER_BLUE;
+    }
+  else if (red==0 && green==255 && blue==0)
+    {
+      backgroundColor=PAPER_GREEN;
+    }
+  else if (red==255 && green==0 && blue==0)
+    {
+      backgroundColor=PAPER_RED;
+    }
+  else if (red==0 && green==255 && blue==255)
+    {
+      backgroundColor=PAPER_CYAN;
+    }
+  else if (red==255 && green==0 && blue==255)
+    {
+      backgroundColor=PAPER_MAGENTA;
+    }
+  else if (red==255 && green==255 && blue==0)
+    {
+      backgroundColor=PAPER_YELLOW;
+    }
+  else
+    {
+      backgroundColor=PAPER_BLACK;
+    }
 }
 
 /**
