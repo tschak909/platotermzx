@@ -15,7 +15,7 @@ void main(void)
   io_init();
   for (;;)
     {
-      /* keyboard_main(); */
+      keyboard_main();
       io_main();
     }
 }

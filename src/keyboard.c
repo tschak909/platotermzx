@@ -8,17 +8,18 @@
  */
 
 #include <conio.h>
+#include <spectrum.h>
 #include "key.h"
 #include "keyboard.h"
 #include "screen.h"
 #include "protocol.h"
 #include "io.h"
 #include "plato_key.h"
+#include "help.h"
 
 extern padBool TTY;
 static unsigned char ch;
-static unsigned char shift_lock=0;
-static unsigned char is_escape=0;
+static unsigned char is_extend=0;
 
 /**
  * keyboard_out - If platoKey < 0x7f, pass off to protocol
@@ -57,36 +58,29 @@ void keyboard_main(void)
   ch=getk();
   if (ch!=0x00)
     {
-      if (is_escape==1 && ch==0x1B) // ESC
+      if (is_extend==0 && ch==0x0e) // EXTEND pressed.
 	{
-	  screen_beep();
-
-	  if (shift_lock==1)
-	    shift_lock=0;
-	  else
-	    shift_lock=1;
-	  
-	  is_escape=0;
+	  zx_border(INK_GREEN);
+	  is_extend=1;
 	}
-      else if (is_escape==0 && ch==0x1B)
-	is_escape=1;
-      /* else if (ch==0x1A) // CTRL-Z for prefs */
-      /* 	prefs_run(); */
       else if (TTY)
 	{
 	  keyboard_out_tty(ch);
 	}
-      else if (is_escape==1)
+      else if (is_extend==1 && ch==0x30)
 	{
-	  keyboard_out(esc_key_to_pkey[ch]);
-	  is_escape=0;
+	  help_run();
 	}
-      else if (shift_lock==1)
+      else if (is_extend==1)
 	{
-	  keyboard_out(shiftlock_key_to_pkey[ch]);
+	  zx_border(INK_GREEN);
+	  keyboard_out(extend_key_to_pkey[ch]);
+	  is_extend=0;
+	  zx_border(INK_WHITE);
 	}
       else
 	{
+	  zx_border(INK_BLACK);
 	  keyboard_out(key_to_pkey[ch]);
 	}
     }

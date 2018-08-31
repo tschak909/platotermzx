@@ -16,6 +16,15 @@ extern unsigned short fontptr[];
 extern unsigned char FONT_SIZE_X;
 extern unsigned char FONT_SIZE_Y;
 
+void bx(int x1, int y1, int x2, int y2)
+{
+  int y=0;
+  for (y=y1; y<y2; y++)
+    {
+      undraw(x1,y,x2,y);
+    }
+}
+
 /**
  * screen_init() - Set up the screen
  */
@@ -51,16 +60,20 @@ void screen_clear(void)
  */
 void screen_block_draw(padPt* Coord1, padPt* Coord2)
 {
-  short y;
+  /* short y; */
+
+  /* if (CurMode==ModeErase || CurMode==ModeInverse) */
+  /*   { */
+  /*     undrawb(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]); */
+  /*   } */
+  /* else */
+  /*   { */
+  /*    drawb(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]); */
+  /*   } */
   if (CurMode==ModeErase || CurMode==ModeInverse)
-    clga(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
+    bx(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
   else
-    {
-      for (y=Coord1->y;y<Coord2->y;y++)
-	{
-	  draw(scalex[Coord1->x],scaley[y],scalex[Coord2->x],scaley[y]);
-	}
-    }
+    bx(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
 }
 
 /**

@@ -37,8 +37,7 @@ void io_send_byte(unsigned char b)
 {
   if (io_initialized==1)
     {
-      zx_border(INK_CYAN);
-      send(sockfd,b,sizeof(unsigned char), 0);
+      send(sockfd,&b,sizeof(unsigned char), 0);
     }
 }
 
@@ -47,25 +46,25 @@ void io_main(void)
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
-      zx_border(INK_WHITE);
+      //      zx_border(INK_BLACK);
       bytes=recv(sockfd,rxdata,1,0);
       ShowPLATO(rxdata,1);
     }
   else if (pfd & POLLCON)
     {
-      zx_border(INK_BLUE);
+      //zx_border(INK_BLUE);
     }
   else if (pfd & POLLHUP)
     {
-      zx_border(INK_RED);
+      //zx_border(INK_RED);
     }
   else if (pfd & POLLNVAL)
     {
-      zx_border(INK_YELLOW);
+      //zx_border(INK_YELLOW);
     }
   else
     {
-      zx_border(INK_GREEN);
+      //zx_border(INK_WHITE);
     }
 }
 

@@ -553,7 +553,7 @@ LoadAddrx (void)
 void
 LoadCharx (void)
 {
-  // Char[CharCnt] = theWord;
+  Char[CharCnt] = theWord;
   if (CharCnt < 7)
     CharCnt++;
   else
