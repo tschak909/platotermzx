@@ -7,8 +7,8 @@
 unsigned char CharWide=8;
 unsigned char CharHigh=16;
 padPt TTYLoc;
-long foregroundColor;
-long backgroundColor;
+long foregroundColor=INK_WHITE;
+long backgroundColor=PAPER_BLACK;
 
 extern padBool FastText; /* protocol.c */
 extern unsigned short scalex[];
@@ -28,6 +28,10 @@ void bx(int x1, int y1, int x2, int y2)
     {
       undraw(x1,y,x2,y);
     }
+}
+
+void as(int x1, int y1, int x2, int y2)
+{
 }
 
 /**
@@ -58,6 +62,7 @@ void screen_beep(void)
 void screen_clear(void)
 {
   clg();
+  zx_colour(PAPER_BLACK|INK_WHITE);
 }
 
 /**
@@ -97,10 +102,40 @@ void screen_dot_draw(padPt* Coord)
  */
 void screen_line_draw(padPt* Coord1, padPt* Coord2)
 {
-  unsigned short x1=scalex[Coord1->x];
-  unsigned short x2=scalex[Coord2->x];
-  unsigned short y1=scaley[Coord1->y];
-  unsigned short y2=scaley[Coord2->y];
+  unsigned char x1=scalex[Coord1->x];
+  unsigned char x2=scalex[Coord2->x];
+  unsigned char y1=scaley[Coord1->y];
+  unsigned char y2=scaley[Coord2->y];
+
+  unsigned short x,y;
+  unsigned char* aaddr;
+  
+  if (foregroundColor!=INK_WHITE)
+    {
+      for (y=Coord1->y; y<=Coord2->y; y++)
+  	{
+  	  for (x=Coord1->x; x<=Coord2->x; x++)
+  	    {
+  	      aaddr=zx_pxy2aaddr(scalex[x],scaley[y]);
+  	      *aaddr=foregroundColor;
+	      
+  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; */
+
+  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; */
+  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; */
+
+  	    }
+  	}
+    }
 
   if (CurMode==ModeErase || CurMode==ModeInverse)
     undraw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
@@ -130,6 +165,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   unsigned char altColor=0;
   unsigned char *p;
   unsigned char* curfont;
+  unsigned char* aaddr;
   
   switch(CurMem)
     {
@@ -190,6 +226,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   	    {
   	      if (b<0) /* check sign bit. */
 		{
+		  *zx_pxy2aaddr(x+1,y+1)=foregroundColor;
 		  if (mainColor==0)
 		    unplot(x,y);
 		  else
@@ -261,17 +298,24 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 		    {
 		      if (mainColor==0)
 			{
+			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
+			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
+			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
 			  unplot(*px+1,*py);
 			  unplot(*px,*py+1);
 			  unplot(*px+1,*py+1);
 			}
 		      else
 			{
+			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
+			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
+			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
 			  plot(*px+1,*py);
 			  plot(*px,*py+1);
 			  plot(*px+1,*py+1);
 			}
 		    }
+		  *zx_pxy2aaddr(*px,*py)=foregroundColor;
 		  if (mainColor==0)
 		    unplot(*px,*py);
 		  else
@@ -285,17 +329,24 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			{
 			  if (altColor==0)
 			    {
+			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
+			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
+			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
 			      unplot(*px+1,*py);
 			      unplot(*px,*py+1);
 			      unplot(*px+1,*py+1);
 			    }
 			  else
 			    {
+			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
+			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
+			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
 			      plot(*px+1,*py);
 			      plot(*px,*py+1);
 			      plot(*px+1,*py+1);
-			    }			  
+			    }
 			}
+		      *zx_pxy2aaddr(*px,*py);
 		      if (altColor==0)
 			unplot(*px,*py);
 		      else
