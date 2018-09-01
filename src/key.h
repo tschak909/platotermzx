@@ -159,7 +159,7 @@ unsigned char extend_key_to_pkey[]={
     PKEY_NOKEY, /* 0x0a CTRL-J */
     PKEY_NOKEY, /* 0x0b CTRL-K */
     PKEY_NOKEY, /* 0x0c CTRL-L */
-    PKEY_NOKEY, /* 0x0d CTRL-M */
+    PKEY_NEXT1, /* 0x0d CTRL-M */
     PKEY_NOKEY, /* 0x0e CTRL-N */
     PKEY_NOKEY, /* 0x0f CTRL-O */
     PKEY_NOKEY, /* 0x10 CTRL-P */
