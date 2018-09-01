@@ -235,7 +235,7 @@ unsigned char extend_key_to_pkey[]={
     PKEY_NOKEY, /* 0x56 V */
     PKEY_NOKEY, /* 0x57 W */
     PKEY_NOKEY, /* 0x58 X */
-    PKEY_NOKEY, /* 0x59 Y */
+    PKEY_SUB1, /* 0x59 Y */
     PKEY_NOKEY, /* 0x5a Z */
     PKEY_NOKEY, /* 0x5b [ */
     PKEY_NOKEY, /* 0x5c / */
@@ -258,7 +258,7 @@ unsigned char extend_key_to_pkey[]={
     PKEY_MICRO, /* 0x6d m */
     PKEY_NEXT, /* 0x6e n */
     PKEY_NOKEY, /* 0x6f o */
-    PKEY_NOKEY, /* 0x70 p */
+    PKEY_SUPER, /* 0x70 p */
     PKEY_SQUARE, /* 0x71 q */
     PKEY_ERASE, /* 0x72 r */
     PKEY_STOP, /* 0x73 s */
@@ -267,7 +267,7 @@ unsigned char extend_key_to_pkey[]={
     PKEY_NOKEY, /* 0x76 v */
     PKEY_NOKEY, /* 0x77 w */
     PKEY_MULTIPLY, /* 0x78 x */
-    PKEY_NOKEY, /* 0x79 y */
+    PKEY_SUB, /* 0x79 y */
     PKEY_NOKEY, /* 0x7a z */
     PKEY_NOKEY, /* 0x7b { */
     PKEY_NOKEY, /* 0x7c | */
