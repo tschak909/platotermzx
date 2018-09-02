@@ -76,7 +76,7 @@ void help_run(void)
   char entry[ENTRY_LENGTH];
 
   zx_border(YELLOW);
-  
+  help_keys();
     do {
       help_prompt_input(" Help for which key? ");
       cgets(entry);

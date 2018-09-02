@@ -13,11 +13,12 @@ static struct sockaddr_in remoteaddr;
 char rxdata[1024];
 struct hostent *he;
 char io_initialized=0;
+char host_name[32];
 
 void io_init(void)
 {
   zx_border(INK_BLACK);
-  he=gethostbyname("irata.online");
+  he=gethostbyname(host_name);
   sockfd=socket(AF_INET,SOCK_STREAM,0);
   remoteaddr.sin_port=htons(8005);
   remoteaddr.sin_addr.s_addr=he->h_addr;
@@ -46,25 +47,8 @@ void io_main(void)
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
-      //      zx_border(INK_BLACK);
       bytes=recv(sockfd,rxdata,1,0);
       ShowPLATO(rxdata,1);
-    }
-  else if (pfd & POLLCON)
-    {
-      //zx_border(INK_BLUE);
-    }
-  else if (pfd & POLLHUP)
-    {
-      //zx_border(INK_RED);
-    }
-  else if (pfd & POLLNVAL)
-    {
-      //zx_border(INK_YELLOW);
-    }
-  else
-    {
-      //zx_border(INK_WHITE);
     }
 }
 
