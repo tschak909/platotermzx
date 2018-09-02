@@ -10,7 +10,7 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 CFLAGS=+zx
-LDFLAGS=-lndos -llibsocket -create-app
+LDFLAGS=-lndos -llibsocket -lm -create-app
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))

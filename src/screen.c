@@ -1,6 +1,7 @@
 
 #include <graphics.h>
 #include <spectrum.h>
+#include <sound.h>
 #include "screen.h"
 #include "protocol.h"
 
@@ -19,7 +20,6 @@ extern unsigned char fontm23[];
 extern unsigned short fontptr[];
 extern unsigned char FONT_SIZE_X;
 extern unsigned char FONT_SIZE_Y;
-
 
 void bx(int x1, int y1, int x2, int y2)
 {
@@ -54,6 +54,7 @@ void screen_wait(void)
  */
 void screen_beep(void)
 {
+  bit_frequency(.2,440);
 }
 
 /**
@@ -110,32 +111,32 @@ void screen_line_draw(padPt* Coord1, padPt* Coord2)
   unsigned short x,y;
   unsigned char* aaddr;
   
-  if (foregroundColor!=INK_WHITE)
-    {
-      for (y=Coord1->y; y<=Coord2->y; y++)
-  	{
-  	  for (x=Coord1->x; x<=Coord2->x; x++)
-  	    {
-  	      aaddr=zx_pxy2aaddr(scalex[x],scaley[y]);
-  	      *aaddr=foregroundColor;
+  /* if (foregroundColor!=INK_WHITE) */
+  /*   { */
+  /*     for (y=Coord1->y; y<=Coord2->y; y++) */
+  /* 	{ */
+  /* 	  for (x=Coord1->x; x<=Coord2->x; x++) */
+  /* 	    { */
+  /* 	      aaddr=zx_pxy2aaddr(scalex[x],scaley[y]); */
+  /* 	      *aaddr=foregroundColor; */
 	      
-  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; *\/ */
 
-  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; */
-  	      /* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; *\/ */
+  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; *\/ */
 
-  	    }
-  	}
-    }
+  /* 	    } */
+  /* 	} */
+  /*   } */
 
   if (CurMode==ModeErase || CurMode==ModeInverse)
     undraw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
