@@ -1,4 +1,4 @@
-
+#ifndef __RS232__
 #include <conio.h>
 #include <spectrum.h>
 #include <string.h>
@@ -23,3 +23,4 @@ void connect(void)
     }
   help_clear();
 }
+#endif
