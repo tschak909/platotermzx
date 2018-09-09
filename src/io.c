@@ -17,6 +17,8 @@ char host_name[32];
 
 void io_init(void)
 {
+#ifdef __RS232__
+#else
   zx_border(INK_BLACK);
   he=gethostbyname(host_name);
   sockfd=socket(AF_INET,SOCK_STREAM,0);
@@ -24,6 +26,7 @@ void io_init(void)
   remoteaddr.sin_addr.s_addr=he->h_addr;
   connect(sockfd,&remoteaddr,sizeof(struct sockaddr_in));
   io_initialized=1;
+#endif
 }
 
 void io_init_funcptrs(void)
@@ -36,20 +39,26 @@ void io_open(void)
 
 void io_send_byte(unsigned char b)
 {
+#ifdef __RS232__
+#else
   if (io_initialized==1)
     {
       send(sockfd,&b,sizeof(unsigned char), 0);
     }
+#endif
 }
 
 void io_main(void)
 {
+#ifdef __RS232__
+#else
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
       bytes=recv(sockfd,rxdata,1,0);
       ShowPLATO(rxdata,1);
     }
+#endif
 }
 
 void io_recv_serial(void)

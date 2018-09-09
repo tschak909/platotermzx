@@ -13,7 +13,9 @@ void main(void)
   terminal_init();
   ShowPLATO(splash,1282);
   terminal_initial_position();
+#ifndef __RS232__
   connect();
+#endif
   io_init();
   for (;;)
     {
