@@ -1,6 +1,8 @@
 
 #include <graphics.h>
+#ifndef __CPC__
 #include <spectrum.h>
+#endif
 #include <sound.h>
 #include "screen.h"
 #include "protocol.h"
@@ -8,8 +10,10 @@
 unsigned char CharWide=8;
 unsigned char CharHigh=16;
 padPt TTYLoc;
+#ifndef __CPC__
 long foregroundColor=INK_WHITE;
 long backgroundColor=PAPER_BLACK;
+#endif
 
 extern padBool FastText; /* protocol.c */
 extern unsigned short scalex[];
@@ -54,7 +58,9 @@ void screen_wait(void)
  */
 void screen_beep(void)
 {
+#ifndef __CPC__
   bit_frequency(.2,440);
+#endif
 }
 
 /**
@@ -63,7 +69,9 @@ void screen_beep(void)
 void screen_clear(void)
 {
   clg();
+#ifndef __CPC__
   zx_colour(PAPER_BLACK|INK_WHITE);
+#endif
 }
 
 /**
@@ -227,7 +235,9 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   	    {
   	      if (b<0) /* check sign bit. */
 		{
+#ifndef __CPC__
 		  *zx_pxy2aaddr(x+1,y+1)=foregroundColor;
+#endif
 		  if (mainColor==0)
 		    unplot(x,y);
 		  else
@@ -299,24 +309,30 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 		    {
 		      if (mainColor==0)
 			{
+#ifndef __CPC__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
+#endif
 			  unplot(*px+1,*py);
 			  unplot(*px,*py+1);
 			  unplot(*px+1,*py+1);
 			}
 		      else
 			{
+#ifndef __CPC__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
+#endif
 			  plot(*px+1,*py);
 			  plot(*px,*py+1);
 			  plot(*px+1,*py+1);
 			}
 		    }
+#ifndef __CPC__
 		  *zx_pxy2aaddr(*px,*py)=foregroundColor;
+#endif
 		  if (mainColor==0)
 		    unplot(*px,*py);
 		  else
@@ -330,24 +346,30 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			{
 			  if (altColor==0)
 			    {
+#ifndef __CPC__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
+#endif
 			      unplot(*px+1,*py);
 			      unplot(*px,*py+1);
 			      unplot(*px+1,*py+1);
 			    }
 			  else
 			    {
+#ifndef __CPC__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
+#endif
 			      plot(*px+1,*py);
 			      plot(*px,*py+1);
 			      plot(*px+1,*py+1);
 			    }
 			}
+#ifndef __CPC__
 		      *zx_pxy2aaddr(*px,*py);
+#endif
 		      if (altColor==0)
 			unplot(*px,*py);
 		      else
@@ -412,6 +434,7 @@ void screen_tty_char(padByte theChar)
  */
 void screen_foreground(padRGB* theColor)
 {
+#ifndef __CPC__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;
@@ -448,6 +471,7 @@ void screen_foreground(padRGB* theColor)
     {
       foregroundColor=INK_WHITE;
     }
+#endif
 }
 
 /**
@@ -455,6 +479,7 @@ void screen_foreground(padRGB* theColor)
  */
 void screen_background(padRGB* theColor)
 {
+#ifndef __CPC__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;
@@ -491,6 +516,7 @@ void screen_background(padRGB* theColor)
     {
       backgroundColor=PAPER_BLACK;
     }
+#endif
 }
 
 /**

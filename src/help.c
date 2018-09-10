@@ -74,8 +74,9 @@ void help_run(void)
 {
   char help_done=1;
   char entry[ENTRY_LENGTH];
-
+#ifndef __CPC__
   zx_border(YELLOW);
+#endif
   help_keys();
     do {
       help_prompt_input(" Help for which key? ");
@@ -180,7 +181,7 @@ void help_run(void)
 	  help_prompt_key_display(" not a PLATO key.",0);
 	}
     }   while (help_done==0);
-
+#ifndef __CPC__
     zx_border(BLACK);
-    
+#endif
 }
