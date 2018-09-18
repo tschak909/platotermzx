@@ -13,4 +13,8 @@
 #include "splash_svi.h"
 #endif
 
+#ifdef __MSX__
+#include "splash_msx.h"
+#endif
+
 #endif

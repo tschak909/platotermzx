@@ -3,6 +3,9 @@
 #ifdef __SPECTRUM__
 #include <spectrum.h>
 #endif
+#ifdef __MSX__
+#include <msx.h>
+#endif
 #include <sound.h>
 #include "screen.h"
 #include "protocol.h"
