@@ -8,7 +8,7 @@
  */
 
 #include <conio.h>
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 #include <spectrum.h>
 #endif
 #include "key.h"
@@ -62,7 +62,7 @@ void keyboard_main(void)
     {
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.
 	{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 	  zx_border(INK_GREEN);
 #endif
 	  is_extend=1;
@@ -77,18 +77,18 @@ void keyboard_main(void)
 	}
       else if (is_extend==1)
 	{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 	  zx_border(INK_GREEN);
 #endif
 	  keyboard_out(extend_key_to_pkey[ch]);
 	  is_extend=0;
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 	  zx_border(INK_BLACK);
 #endif
 	}
       else
 	{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 	  zx_border(INK_BLACK);
 #endif
 	  keyboard_out(key_to_pkey[ch]);

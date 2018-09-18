@@ -1,6 +1,6 @@
 
 #include <graphics.h>
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 #include <spectrum.h>
 #endif
 #include <sound.h>
@@ -10,7 +10,7 @@
 unsigned char CharWide=8;
 unsigned char CharHigh=16;
 padPt TTYLoc;
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 long foregroundColor=INK_WHITE;
 long backgroundColor=PAPER_BLACK;
 #endif
@@ -58,7 +58,7 @@ void screen_wait(void)
  */
 void screen_beep(void)
 {
-#ifndef __CPC__
+#ifdef __SPECTRUM__
   bit_frequency(.2,440);
 #endif
 }
@@ -69,7 +69,7 @@ void screen_beep(void)
 void screen_clear(void)
 {
   clg();
-#ifndef __CPC__
+#ifdef __SPECTRUM__
   zx_colour(PAPER_BLACK|INK_WHITE);
 #endif
 }
@@ -79,16 +79,6 @@ void screen_clear(void)
  */
 void screen_block_draw(padPt* Coord1, padPt* Coord2)
 {
-  /* short y; */
-
-  /* if (CurMode==ModeErase || CurMode==ModeInverse) */
-  /*   { */
-  /*     undrawb(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]); */
-  /*   } */
-  /* else */
-  /*   { */
-  /*    drawb(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]); */
-  /*   } */
   if (CurMode==ModeErase || CurMode==ModeInverse)
     bx(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
   else
@@ -119,33 +109,6 @@ void screen_line_draw(padPt* Coord1, padPt* Coord2)
   unsigned short x,y;
   unsigned char* aaddr;
   
-  /* if (foregroundColor!=INK_WHITE) */
-  /*   { */
-  /*     for (y=Coord1->y; y<=Coord2->y; y++) */
-  /* 	{ */
-  /* 	  for (x=Coord1->x; x<=Coord2->x; x++) */
-  /* 	    { */
-  /* 	      aaddr=zx_pxy2aaddr(scalex[x],scaley[y]); */
-  /* 	      *aaddr=foregroundColor; */
-	      
-  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y+8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x+8],scaley[y+8])=foregroundColor; *\/ */
-
-  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x],scaley[y-8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; *\/ */
-  /* 	      /\* *zx_pxy2aaddr(scalex[x-8],scaley[y-8])=foregroundColor; *\/ */
-
-  /* 	    } */
-  /* 	} */
-  /*   } */
-
   if (CurMode==ModeErase || CurMode==ModeInverse)
     undraw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
   else
@@ -235,7 +198,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   	    {
   	      if (b<0) /* check sign bit. */
 		{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 		  *zx_pxy2aaddr(x+1,y+1)=foregroundColor;
 #endif
 		  if (mainColor==0)
@@ -309,7 +272,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 		    {
 		      if (mainColor==0)
 			{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
@@ -320,7 +283,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			}
 		      else
 			{
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
@@ -330,7 +293,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			  plot(*px+1,*py+1);
 			}
 		    }
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 		  *zx_pxy2aaddr(*px,*py)=foregroundColor;
 #endif
 		  if (mainColor==0)
@@ -346,7 +309,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			{
 			  if (altColor==0)
 			    {
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
@@ -357,7 +320,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			    }
 			  else
 			    {
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
@@ -367,7 +330,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			      plot(*px+1,*py+1);
 			    }
 			}
-#ifndef __CPC__
+#ifdef __SPECTRUM__
 		      *zx_pxy2aaddr(*px,*py);
 #endif
 		      if (altColor==0)
@@ -434,7 +397,7 @@ void screen_tty_char(padByte theChar)
  */
 void screen_foreground(padRGB* theColor)
 {
-#ifndef __CPC__
+#ifdef __SPECTRUM__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;
@@ -479,7 +442,7 @@ void screen_foreground(padRGB* theColor)
  */
 void screen_background(padRGB* theColor)
 {
-#ifndef __CPC__
+#ifdef __SPECTRUM__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;

@@ -9,8 +9,8 @@ SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-CFLAGS=+zx
-LDFLAGS=-lndos -llibsocket -lm -create-app
+CFLAGS=+zx -D__SPECTRUM__ -D__RS232__
+LDFLAGS=-lndos -lm -lrs232if1 -create-app
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))

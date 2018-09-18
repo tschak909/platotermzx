@@ -1,19 +1,21 @@
 #include <stdbool.h>
+#include <input.h>
+#include <stdint.h>
 #include "protocol.h"
 #include "screen.h"
 #include "terminal.h"
 #include "connect.h"
+#include "splash.h"
 
-extern padByte splash[];
 unsigned char already_started=0;
 
 void main(void)
 {
   screen_init();
   terminal_init();
-  ShowPLATO(splash,1282);
+  ShowPLATO(splash,sizeof(splash));
   terminal_initial_position();
-#ifndef __RS232__
+#ifdef __SPECTRANET__
   connect();
 #endif
   io_init();

@@ -1,4 +1,4 @@
-#ifndef __RS232__
+#ifdef __SPECTRANET__
 #include <conio.h>
 #include <spectrum.h>
 #include <string.h>

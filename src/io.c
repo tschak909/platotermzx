@@ -2,19 +2,23 @@
 #include <string.h>
 #ifdef __RS232__
 #include <rs232.h>
-#else
+#endif
+#ifdef __SPECTRANET__
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sockpoll.h>
 #include <netdb.h>
 #endif
+#ifdef __SPECTRUM__
 #include <spectrum.h>
+#endif
 #include "io.h"
 #include "protocol.h"
 
 #ifdef __RS232__
 static unsigned char inb;
-#else
+#endif
+#ifdef __SPECTRANET__
 static int sockfd, bytes, pfd;
 static struct sockaddr_in remoteaddr;
 char rxdata[1024];
@@ -29,7 +33,8 @@ void io_init(void)
 #ifdef __RS232__
   rs232_params(RS_BAUD_1200|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);
   rs232_init();
-#else
+#endif
+#ifdef __SPECTRANET__
   zx_border(INK_BLACK);
   he=gethostbyname(host_name);
   sockfd=socket(AF_INET,SOCK_STREAM,0);
@@ -56,7 +61,8 @@ void io_send_byte(unsigned char b)
     {
       rs232_put(b);
     }
-#else
+#endif
+#ifdef __SPECTRANET__
   if (io_initialized==1)
     {
       send(sockfd,&b,sizeof(unsigned char), 0);
@@ -71,7 +77,8 @@ void io_main(void)
     {
       ShowPLATO(&inb,1);
     }
-#else
+#endif
+#ifdef __SPECTRANET__
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
