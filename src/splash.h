@@ -17,4 +17,8 @@
 #include "splash_msx.h"
 #endif
 
+#ifdef __EINSTEIN__
+#include "splash_einstein.h"
+#endif
+
 #endif

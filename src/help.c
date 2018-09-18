@@ -11,11 +11,13 @@
  */
 void help_clear(void)
 {
+#ifdef __SPECTRUM__
   gotoxy(1,22);
   textcolor(WHITE);
   textbackground(BLACK);
   cprintf("                                                               ");
   gotoxy(1,22);
+#endif
 }
 
 /**
@@ -23,10 +25,12 @@ void help_clear(void)
  */
 void help_prompt_input(const char* text)
 {
+#ifdef __SPECTRUM__
   help_clear();
   textcolor(WHITE);
   textbackground(BLACK);
   cprintf(text);
+#endif
 }
 
 /**
@@ -34,11 +38,13 @@ void help_prompt_input(const char* text)
  */
 void help_prompt_key_display(const char* text, char extend)
 {
+#ifdef __SPECTRUM__
   gotoxy(32,22);
   cprintf(" - is: ");
   if (extend==1)
     cprintf("EXTEND ");
   cprintf(text);
+#endif
 }
 
 /**
@@ -46,13 +52,14 @@ void help_prompt_key_display(const char* text, char extend)
  */
 void help_keys(void)
 {
+#ifdef __SPECTRUM__
   gotoxy(1,19);
   cprintf("                                                               ");
   cprintf("                                                               ");
   gotoxy(1,19);
   cprintf(" Available keys: ANS  BACK  COPY  DATA  EDIT  FONT  DIVIDE     ");
   cprintf(" HELP  LAB  MICRO  NEXT  SQUARE  STOP  SUB  SUPER  TERM  ASSIGN");
-  
+#endif  
 }
 
 /**
@@ -60,6 +67,7 @@ void help_keys(void)
  */
 void help_matches(char* entry, const char* match)
 {
+#ifdef __SPECTRUM__
   unsigned char i=0;
   // Translate to uppercase.
   for (i=0;i<ENTRY_LENGTH;i++)
@@ -67,6 +75,7 @@ void help_matches(char* entry, const char* match)
       entry[i]=toupper(entry[i]);
     }
   return strcmp(entry,match);
+#endif
 }
 
 /**
@@ -74,6 +83,7 @@ void help_matches(char* entry, const char* match)
  */
 void help_run(void)
 {
+#ifdef __SPECTRUM__
   char help_done=1;
   char entry[ENTRY_LENGTH];
 #ifdef __SPECTRUM__
@@ -185,5 +195,6 @@ void help_run(void)
     }   while (help_done==0);
 #ifdef __SPECTRUM__
     zx_border(BLACK);
+#endif
 #endif
 }
