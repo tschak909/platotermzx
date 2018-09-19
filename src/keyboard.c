@@ -7,8 +7,8 @@
  * keyboard_base.c - Keyboard functions (base)
  */
 
-#include <conio.h>
 #ifdef __SPECTRUM__
+#include <conio.h>
 #include <spectrum.h>
 #endif
 #include "key.h"

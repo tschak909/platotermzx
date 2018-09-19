@@ -9,7 +9,9 @@
 #include <sound.h>
 #include "screen.h"
 #include "protocol.h"
-
+#ifdef __PC6001__
+#include <sys/ioctl.h>
+#endif
 unsigned char CharWide=8;
 unsigned char CharHigh=16;
 padPt TTYLoc;
@@ -46,6 +48,10 @@ void as(int x1, int y1, int x2, int y2)
  */
 void screen_init(void)
 {
+#ifdef __PC6001__
+  int mode = 1;
+  console_ioctl(IOCTL_GENCON_SET_MODE,&mode);
+#endif
   clg();
 }
 

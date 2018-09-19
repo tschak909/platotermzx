@@ -25,4 +25,8 @@
 #include "splash_memotech.h"
 #endif
 
+#ifdef __MICROBEE__
+#include "splash_microbee.h"
+#endif
+
 #endif
