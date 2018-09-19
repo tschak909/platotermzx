@@ -21,4 +21,8 @@
 #include "splash_einstein.h"
 #endif
 
+#ifdef __MEMOTECH__
+#include "splash_memotech.h"
+#endif
+
 #endif
