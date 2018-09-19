@@ -10,7 +10,7 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 CFLAGS=+cpm -D__EINSTEIN__
-LDFLAGS=-lm -leinstein -oplato.com
+LDFLAGS=-lm -leinstein -oPLATO.COM -create-app -subtype=einstein
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
