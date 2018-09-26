@@ -21,7 +21,12 @@ void main(void)
   io_init();
   for (;;)
     {
-      keyboard_main();
-      io_main();
+		//zx_border(INK_CYAN);  //Debug timing
+		for(int Kscan=0;Kscan<40;Kscan++)			//  <TIME>*IRQ STATE [EXECUTION PATH]
+		  {											// 	[NO KEY]			[KEY Local]		[KEY TTY]
+			keyboard_main();						// 	[<1>*IRQ-ON] 	[<4>*IRQ-ON] 	[<80>*IRQ-OFF]
+		  }
+		io_main();									//	[NO RX TTY - KEY scan]			[RX TTY	- Draw Screen]
+													//	[<10>*IRQ-OFF - <40>*IRQ-ON]	[<80>*IRQ-OFF - <20>*IRQ-ON]
     }
 }

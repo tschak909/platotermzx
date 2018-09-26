@@ -3,6 +3,7 @@
  * Based on Steve Peltz's PAD
  * 
  * Author: Thomas Cherryhomes <thom.cherryhomes at gmail dot com>
+ *         Owen Reynolds 
  *
  * keyboard_base.c - Keyboard functions (base)
  */
@@ -49,7 +50,7 @@ void keyboard_out(unsigned char platoKey)
  */
 void keyboard_out_tty(char ch)
 {
-  io_send_byte(ch);
+  io_send_byte(ch);  // *IRQ - OFF
 }
 
 /**
@@ -57,42 +58,46 @@ void keyboard_out_tty(char ch)
  */
 void keyboard_main(void)
 {
-  ch=getk();
-  if (ch!=0x00)
+  ch=getk();	//  <TIME>*IRQ STATE [EXECUTION PATH]
+  if (ch!=0x00) // [KEY Local]		[KEY TTY] 				//Path: ( [KEY Local <1-4>*IRQ-ON] || [KEY TTY <80>*IRQ-OFF] ) || [NO Key hit <1>*IRQ-ON]
     {
-      if (is_extend==0 && ch==0x0e) // EXTEND pressed.
-	{
+      if (is_extend==0 && ch==0x0e) // EXTEND pressed.		// <2>*IRQ-ON 
+		{
 #ifdef __SPECTRUM__
-	  zx_border(INK_GREEN);
+			zx_border(INK_GREEN);
 #endif
-	  is_extend=1;
-	}
-      else if (TTY)
-	{
-	  keyboard_out_tty(ch);
-	}
-      else if (is_extend==1 && ch==0x30)
-	{
-	  help_run();
-	}
-      else if (is_extend==1)
-	{
+			is_extend=1;
+		}
+      else if (TTY)  										// <80>*IRQ-OFF  (SENDING DATA)
+		{
+			keyboard_out_tty(ch);
+		}
+      else if (is_extend==1 && ch==0x30)					// <1>*IRQ-ON
+		{
+			help_run();
+		}
+      else if (is_extend==1)								// <4>*IRQ-ON
+		{
 #ifdef __SPECTRUM__
-	  zx_border(INK_GREEN);
+			zx_border(INK_GREEN);
 #endif
-	  keyboard_out(extend_key_to_pkey[ch]);
-	  is_extend=0;
+			keyboard_out(extend_key_to_pkey[ch]);
+			is_extend=0;
 #ifdef __SPECTRUM__
-	  zx_border(INK_BLACK);
+			zx_border(INK_BLACK);
 #endif
-	}
-      else
-	{
+		}
+      else													// <3>*IRQ-ON 
+		{
 #ifdef __SPECTRUM__
-	  zx_border(INK_BLACK);
+			zx_border(INK_BLACK);
 #endif
-	  keyboard_out(key_to_pkey[ch]);
-	}
+			keyboard_out(key_to_pkey[ch]);
+		}
+    }
+  else  		//  [NO KEY]								// <1>*IRQ-ON 
+    {
+	printf("");		//  delay  --  May be remove this and add a few more to the keyboard scan loops
     }
 }
 
