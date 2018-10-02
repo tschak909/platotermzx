@@ -7,10 +7,15 @@
 #include "connect.h"
 #include "splash.h"
 
+#include "sound.h"	//Added sound for Keyboard and ready beep
+
 unsigned char already_started=0;
 
 void main(void)
 {
+#ifdef __SPECTRUM__
+  zx_border(INK_BLACK);  //Tidy up the borders on start up
+#endif
   screen_init();
   terminal_init();
   ShowPLATO(splash,sizeof(splash));
@@ -19,14 +24,16 @@ void main(void)
   connect();
 #endif
   io_init();
+
+  bit_play("2A--");  //Ready beep
+
   for (;;)
     {
-		//zx_border(INK_CYAN);  //Debug timing
-		for(int Kscan=0;Kscan<40;Kscan++)			//  <TIME>*IRQ STATE [EXECUTION PATH]
-		  {											// 	[NO KEY]			[KEY Local]		[KEY TTY]
-			keyboard_main();						// 	[<1>*IRQ-ON] 	[<4>*IRQ-ON] 	[<80>*IRQ-OFF]
-		  }
-		io_main();									//	[NO RX TTY - KEY scan]			[RX TTY	- Draw Screen]
-													//	[<10>*IRQ-OFF - <40>*IRQ-ON]	[<80>*IRQ-OFF - <20>*IRQ-ON]
+      for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
+      {
+	keyboard_main();
+      }
+
+      io_main();
     }
 }
