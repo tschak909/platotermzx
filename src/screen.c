@@ -492,6 +492,14 @@ void screen_background(padRGB* theColor)
 }
 
 /**
+ * Flood fill
+ */
+void screen_paint(padPt* Coord)
+{
+  fill(scalex[Coord->x],scaley[Coord->y]);
+}
+
+/**
  * screen_done()
  */
 void screen_done(void)

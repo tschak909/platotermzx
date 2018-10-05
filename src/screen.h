@@ -67,6 +67,10 @@ void screen_foreground(padRGB* theColor);
  */
 void screen_background(padRGB* theColor);
 
+/**
+ * screen_paint - Paint
+ */
+void screen_paint(padPt* Coord);
 
 /**
  * screen_done()
