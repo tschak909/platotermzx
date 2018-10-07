@@ -442,6 +442,7 @@ Blockx (void)
       LoadCoordx (&NewCoord);
       screen_block_draw (&CurCoord, &NewCoord);
       SubMode = 0;
+      CurCoord.y-=15;
     }
 }
 
@@ -690,7 +691,7 @@ GoWord (void)
 void
 GoCoord (void)
 {
-  unsigned short CoordType, CoordValue;
+  short CoordType, CoordValue;
 
   CoordValue = theChar & 0x1F;
   CoordType = ((theChar >> 5) & 3);

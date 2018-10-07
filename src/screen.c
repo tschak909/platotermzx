@@ -182,8 +182,8 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   else
     mainColor=1;
 
-  x=scalex[(Coord->x&0x1FF)];
-  y=scaley[(Coord->y)+14&0x1FF];
+  x=scalex[(Coord->x)];
+  y=scaley[(Coord->y)+15];
   
   if (FastText==padF)
     {
