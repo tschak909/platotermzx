@@ -26,6 +26,21 @@ static unsigned char ch;
 unsigned char is_extend=0;  //deleted static is used in IO.C now for Rasta bars
 
 /**
+ * A simple key press feedback.
+ */
+void keyboard_click(void)
+{
+  unsigned char i,j;
+  for (i=0;i<=10;i++)
+    {
+      bit_click();
+      for (j=0;j<4;j++)
+	{
+	}
+    }
+}
+
+/**
  * keyboard_out - If platoKey < 0x7f, pass off to protocol
  * directly. Otherwise, platoKey is an access key, and the
  * ACCESS key must be sent, followed by the particular
@@ -62,8 +77,9 @@ void keyboard_main(void)
   ch=getk();	
   if (ch!=0x00)
     {
-	bit_fx4(0);  //Keyboard click  - until I find some thing better
-
+	/* bit_fx4(0);  //Keyboard click  - until I find some thing better */
+      keyboard_click(); // maybe something better? ;) -thom
+      
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.
 		{
 #ifdef __SPECTRUM__

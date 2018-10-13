@@ -11,6 +11,11 @@
 #define KEYBOARD_H
 
 /**
+ * A simple key press feedback.
+ */
+void keyboard_click(void);
+
+/**
  * keyboard_out - If platoKey < 0x7f, pass off to protocol
  * directly. Otherwise, platoKey is an access key, and the
  * ACCESS key must be sent, followed by the particular
