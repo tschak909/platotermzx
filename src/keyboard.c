@@ -25,6 +25,13 @@ extern padBool TTY;
 static unsigned char ch;
 unsigned char is_extend=0;  //deleted static is used in IO.C now for Rasta bars
 
+// input.h internal state - for trapping verboten keys
+uchar in_KeyDebounce;
+uchar in_KeyStartRepeat;
+uchar in_KeyRepeatPeriod;
+uchar in_KbdState;
+uchar keyboard_break_pressed=false;
+
 /**
  * A simple key press feedback.
  */
@@ -74,6 +81,13 @@ void keyboard_out_tty(char ch)
  */
 void keyboard_main(void)
 {
+  // This snippet looks for break keyboard press, and sets a flag so that I/O doesn't call rs232_get when pressed, to
+  // avoid tripping over the ZX Interface 1's "break" functionality.
+  in_GetKeyReset();
+  keyboard_break_pressed=false;
+  if (in_KeyPressed==0x817F) // Look for BREAK key combination
+    keyboard_break_pressed=true;
+  
   ch=getk();	
   if (ch!=0x00)
     {

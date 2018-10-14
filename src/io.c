@@ -26,6 +26,7 @@ struct hostent *he;
 char host_name[32];
 #endif
 
+extern unsigned char keyboard_break_pressed; // IF1 Break protection
 
 char io_initialized=0;
 extern unsigned char is_extend;  //bring in is_extend for borders
@@ -83,27 +84,32 @@ void io_main(void)
 {
 #ifdef __RS232__
 
-	//Don't try to wrap this in for Rasta bars, it just flashes every call to io_main.										
+  //Don't try to wrap this in for Rasta bars, it just flashes every call to io_main.
+
+  if (keyboard_break_pressed)
+    goto io_do_rx_only; // This has to be short circuited because of the extra keyboard scanning needed.
+  
   if (rs232_get(&inb) != RS_ERR_NO_DATA)  	// *IRQ-OFF (RECEIVING DATA)
     {	/* [RX - Display] */ 	
 #ifdef __SPECTRUM__
-        if(is_extend==1) {zx_border(INK_BLACK);}  else {zx_border(INK_WHITE);}	//RS232 Raster Bars- A little lie, the IO has been done.
+      if(is_extend==1) {zx_border(INK_BLACK);}  else {zx_border(INK_WHITE);}	//RS232 Raster Bars- A little lie, the IO has been done.
 #endif
-	ShowPLATO(&inb,1);
+      ShowPLATO(&inb,1);
 #ifdef __SPECTRUM__
-	if(is_extend==1) {zx_border(INK_GREEN);}  else {zx_border(INK_BLACK);}	//RS232 Raster Bars			
+      if(is_extend==1) {zx_border(INK_GREEN);}  else {zx_border(INK_BLACK);}	//RS232 Raster Bars			
 #endif
     }
   else
     {  /* [NO RX - KEY scan] */  
 #ifdef __SPECTRUM__
-	if(is_extend==1) {zx_border(INK_GREEN);}  else {zx_border(INK_BLACK);}	//RS232 Raster Bars
+    io_do_rx_only:
+      if(is_extend==1) {zx_border(INK_GREEN);}  else {zx_border(INK_BLACK);}	//RS232 Raster Bars
 #endif										 		
-	for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
-	  {
-	    keyboard_main();
-	  }
-
+      for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
+	{
+	  keyboard_main();
+	}
+      
     }
 #endif
 #ifdef __SPECTRANET__
