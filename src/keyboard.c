@@ -10,6 +10,7 @@
 #ifdef __SPECTRUM__
 #include <conio.h>
 #include <spectrum.h>
+#include <input.h>
 #endif
 #include "key.h"
 #include "keyboard.h"
@@ -20,6 +21,9 @@
 #include "help.h"
 
 #include "sound.h"	//Added sound
+
+#define true 1
+#define false 0
 
 extern padBool TTY;
 static unsigned char ch;
