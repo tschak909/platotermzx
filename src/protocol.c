@@ -443,6 +443,7 @@ Blockx (void)
       screen_block_draw (&CurCoord, &NewCoord);
       SubMode = 0;
       CurCoord.y-=15;
+      CurCoord.x+=16;
     }
 }
 
