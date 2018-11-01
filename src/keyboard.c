@@ -78,8 +78,9 @@ void keyboard_main(void)
   if (ch!=0x00)
     {
 	/* bit_fx4(0);  //Keyboard click  - until I find some thing better */
+#ifndef __SVI__
       keyboard_click(); // maybe something better? ;) -thom
-      
+#endif
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.
 		{
 #ifdef __SPECTRUM__
