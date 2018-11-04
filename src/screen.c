@@ -48,6 +48,16 @@ void as(int x1, int y1, int x2, int y2)
  */
 void screen_init(void)
 {
+#ifdef __ADAM__
+
+  /* ADAM needs an NMI vector attached for its VDP interrupt... */
+#asm
+    ld      hl,0x45ed
+    ld      (0x66),hl
+#endasm
+
+#endif
+      
 #ifdef __PC6001__
   int mode = 1;
   console_ioctl(IOCTL_GENCON_SET_MODE,&mode);

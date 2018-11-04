@@ -30,6 +30,7 @@ unsigned char is_extend=0;  //deleted static is used in IO.C now for Rasta bars
  */
 void keyboard_click(void)
 {
+#ifndef NO_BIT
   unsigned char i,j;
   for (i=0;i<=10;i++)
     {
@@ -38,6 +39,7 @@ void keyboard_click(void)
 	{
 	}
     }
+#endif
 }
 
 /**
@@ -77,8 +79,7 @@ void keyboard_main(void)
   ch=getk();	
   if (ch!=0x00)
     {
-	/* bit_fx4(0);  //Keyboard click  - until I find some thing better */
-#ifndef __SVI__
+#ifndef NO_BIT
       keyboard_click(); // maybe something better? ;) -thom
 #endif
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.

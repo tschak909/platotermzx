@@ -25,7 +25,7 @@ void main(void)
 #endif
   io_init();
 
-#ifndef __SVI__
+#ifndef NO_BIT
   bit_play("2A--");  //Ready beep
 #endif
   

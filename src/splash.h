@@ -9,6 +9,10 @@
 #include "splash_cpc.h"
 #endif
 
+#ifdef __ADAM__
+#include "splash_adam.h"
+#endif
+
 #ifdef __SVI__
 #include "splash_svi.h"
 #endif
