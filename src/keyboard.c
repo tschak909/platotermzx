@@ -95,8 +95,18 @@ void keyboard_main(void)
 		}
       else if (is_extend==1 && ch==0x30)
 		{
+		  is_extend=0;
 			help_run();
 		}
+      else if (is_extend==1 && ch==0x39)
+	{
+#ifdef __SPECTRUM__
+	  zx_border(INK_MAGENTA);
+	  zx_hardcopy();
+	  zx_border(INK_BLACK);
+	  is_extend=0;
+#endif
+	}
       else if (is_extend==1)
 		{
 #ifdef __SPECTRUM__
