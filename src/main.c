@@ -19,6 +19,7 @@ void main(void)
   screen_init();
   terminal_init();
   ShowPLATO(splash,sizeof(splash));
+  terminal_ready();
   terminal_initial_position();
 #ifdef __SPECTRANET__
   connect();

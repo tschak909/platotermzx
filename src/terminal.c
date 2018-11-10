@@ -303,3 +303,12 @@ void terminal_char_load(padWord charnum, charData theChar)
 	}
     }
 }
+
+/**
+ * terminal_ready() - Show ready
+ */
+void terminal_ready(void)
+{
+  TTYLoc.x=TTYLoc.y=0;
+  ShowPLATO("PLATOTerm 1.2 Ready. EXTEND 9 - Print. EXTEND 0 - Help",54);
+}

@@ -12,8 +12,8 @@ extern char host_name[32];
  */
 void connect(void)
 {
-  gotoxy(1,19);
-  cprintf("Press EXTEND 0 for help with PLATO keys.");
+  /* gotoxy(1,19); */
+  /* cprintf("Press EXTEND 0 for help with PLATO keys."); */
   help_clear();
   help_prompt_input("Enter Hostname or <ENTER> for IRATA.ONLINE: ");
   cgets(host_name);

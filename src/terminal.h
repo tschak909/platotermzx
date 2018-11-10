@@ -119,4 +119,9 @@ padByte terminal_ext_in(void);
  */
 void terminal_ext_out(padByte value);
 
+/**
+ * terminal_ready() - Show ready
+ */
+void terminal_ready(void);
+
 #endif
