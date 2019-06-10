@@ -18,6 +18,7 @@
 #ifdef __RS232__
 static unsigned char inb;
 #endif
+
 #ifdef __SPECTRANET__
 static int sockfd, bytes, pfd;
 static struct sockaddr_in remoteaddr;
@@ -26,6 +27,11 @@ struct hostent *he;
 char host_name[32];
 #endif
 
+#ifdef __UNO__
+#include "uno/zifi.h"
+
+static unsigned char inb;
+#endif 
 
 char io_initialized=0;
 extern unsigned char is_extend;  //bring in is_extend for borders
@@ -36,6 +42,7 @@ void io_init(void)
   rs232_params(RS_BAUD_9600|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
   rs232_init();
 #endif
+
 #ifdef __SPECTRANET__
   zx_border(INK_BLACK);
   he=gethostbyname(host_name);
@@ -77,6 +84,12 @@ void io_send_byte(unsigned char b)
       send(sockfd,&b,sizeof(unsigned char), 0);
     }
 #endif
+
+#ifdef __UNO__
+  if (io_initialized==1) {
+    sendByte(b);
+  }
+#endif
 }
 
 void io_main(void)
@@ -114,6 +127,13 @@ void io_main(void)
       ShowPLATO(rxdata,1);
     }
 #endif
+
+#ifdef __UNO__
+  while (isAvail()) {
+      inb = getByte();
+      ShowPLATO(&inb,1);
+	    }
+#endif 
 }
 
 void io_recv_serial(void)
