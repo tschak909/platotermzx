@@ -45,10 +45,12 @@ void connect()
   help_clear();
 
   initWifi();
-  cprintf("Connected to SSID: %s\n", &ssid);
   if (openTcp(&host, "8005")) {
     cprintf("Connected to host %s", &host);
     is_connected = 1;
+  } else {
+    cprintf("Failed to connect to host %s  ", &host);
+    for (;;);
   }
 
 }
