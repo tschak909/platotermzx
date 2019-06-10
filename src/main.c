@@ -24,6 +24,9 @@ void main(void)
 #ifdef __SPECTRANET__
   connect();
 #endif
+#ifdef __UNO__
+  connect();
+#endif
   io_init();
 
 #ifndef NO_BIT
@@ -34,7 +37,7 @@ void main(void)
     {
       for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
       {
-	keyboard_main();
+	      keyboard_main();
       }
 
       io_main();
