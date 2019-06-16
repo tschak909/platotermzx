@@ -30,6 +30,8 @@ extern unsigned short fontptr[];
 extern unsigned char FONT_SIZE_X;
 extern unsigned char FONT_SIZE_Y;
 
+char enable_fill;
+
 void bx(int x1, int y1, int x2, int y2)
 {
   int y=0;
@@ -506,7 +508,8 @@ void screen_background(padRGB* theColor)
  */
 void screen_paint(padPt* Coord)
 {
-  fill(scalex[Coord->x],scaley[Coord->y]);
+  if (enable_fill) 
+    fill(scalex[Coord->x],scaley[Coord->y]);
 }
 
 /**

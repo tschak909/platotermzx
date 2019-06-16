@@ -13,6 +13,7 @@ unsigned char already_started=0;
 
 void main(void)
 {
+  char c; 
 #ifdef __SPECTRUM__
   zx_border(INK_BLACK);  //Tidy up the borders on start up
 #endif
@@ -21,6 +22,22 @@ void main(void)
   ShowPLATO(splash,sizeof(splash));
   terminal_ready();
   terminal_initial_position();
+  
+  help_clear();
+  cprintf("Enable graphics fill?(y/n)");
+  while(1)
+  {
+    c = getch();
+    if (c == 'y') {
+      enable_fill = 1;
+      break;
+    }
+    if (c == 'n')  {
+      enable_fill = 0;
+      break;
+    }
+  }
+
 #ifdef __SPECTRANET__
   connect();
 #endif
