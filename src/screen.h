@@ -12,6 +12,8 @@
 
 #include "protocol.h"
 
+extern char enable_fill;
+
 /**
  * screen_init() - Set up the screen
  */
