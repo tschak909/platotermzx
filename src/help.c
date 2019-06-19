@@ -1,6 +1,7 @@
 #ifdef __SPECTRUM__
 #include <spectrum.h>
 #include <conio.h>
+#include "ctype.h"
 #endif
 #include "help.h"
 
