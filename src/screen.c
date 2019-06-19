@@ -7,6 +7,7 @@
 #include <msx.h>
 #endif
 #include <sound.h>
+#include <stdlib.h>
 #include "screen.h"
 #include "protocol.h"
 #ifdef __PC6001__

@@ -8,6 +8,7 @@
  */
 
 #include <stdbool.h>
+#include <string.h>
 #include "terminal.h"
 #include "screen.h"
 

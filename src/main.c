@@ -1,11 +1,19 @@
 #include <stdbool.h>
 #include <input.h>
 #include <stdint.h>
+#include <stdio.h>
 #include "protocol.h"
 #include "screen.h"
 #include "terminal.h"
 #include "connect.h"
 #include "splash.h"
+#include "help.h"
+#ifdef __SPECTRUM__
+#include <conio.h>
+#endif
+
+#include "io.h"
+#include "keyboard.h"
 
 #include "sound.h"	//Added sound for Keyboard and ready beep
 

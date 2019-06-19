@@ -62,6 +62,7 @@ extern void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char coun
 extern void screen_tty_char(padByte theChar);
 extern void screen_foreground(padRGB* theColor);
 extern void screen_background(padRGB* theColor);
+extern void screen_paint(padPt* Coord);
 extern void terminal_mem_load(padWord addr, padWord value);
 extern void terminal_char_load(padWord charnum, charData theChar);
 extern void terminal_mode_5(padWord value);
