@@ -8,6 +8,7 @@
 #include <spectrum.h>
 #include "../../include/io.h"
 #include "../../include/protocol.h"
+#include "../../include/keyboard.h"
 
 static int sockfd, bytes, pfd;
 static struct sockaddr_in remoteaddr;
@@ -45,5 +46,13 @@ void io_main(void)
       bytes=recv(sockfd,rxdata,1,0);
       ShowPLATO(rxdata,1);
     }
+  else
+    {
+      for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
+	{
+	  keyboard_main();
+	} 
+    }
+  
 }
 #endif /* __SPECTRANET__ */
