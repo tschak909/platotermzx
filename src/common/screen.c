@@ -2,8 +2,8 @@
 #include <graphics.h>
 #include <sound.h>
 #include <stdlib.h>
-#include "screen.h"
-#include "protocol.h"
+#include "../include/screen.h"
+#include "../include/protocol.h"
 
 unsigned char CharWide=8;
 unsigned char CharHigh=16;

@@ -1,7 +1,7 @@
 #ifndef SPLASH_EINSTEIN
 #define SPLASH_EINSTEIN
 
-#include "protocol.h"
+#include "../include/protocol.h"
 
 const padByte splash[] = 
 {

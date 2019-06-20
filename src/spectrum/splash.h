@@ -1,7 +1,7 @@
 #ifndef SPLASH_SPECTRUM
 #define SPLASH_SPECTRUM
 
-#include "protocol.h" // for padByte
+#include "../include/protocol.h" // for padByte
 
 const padByte splash[] = 
 {  

@@ -13,7 +13,7 @@
 /* Copyright (c) 1990 by Steve Peltz */
 
 #include <stdbool.h>
-#include "protocol.h"
+#include "../include/protocol.h"
 
 #define	BSIZE	64
 

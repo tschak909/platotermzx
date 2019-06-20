@@ -1,7 +1,7 @@
 #ifndef SPLASH_ADAM
 #define SPLASH_ADAM
 
-#include "protocol.h"
+#include "../include/protocol.h"
 
 const padByte splash[] = 
 {

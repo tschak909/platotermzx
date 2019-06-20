@@ -1,5 +1,5 @@
 
-#include "touch.h"
+#include "../include/touch.h"
 
 /**
  * touch_init() - Set up touch screen

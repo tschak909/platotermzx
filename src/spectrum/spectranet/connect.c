@@ -2,8 +2,8 @@
 #include <conio.h>
 #include <spectrum.h>
 #include <string.h>
-#include "connect.h"
-#include "help.h"
+#include "../../include/connect.h"
+#include "../../include/help.h"
 
 extern char host_name[32];
 

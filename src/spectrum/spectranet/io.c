@@ -6,8 +6,8 @@
 #include <sockpoll.h>
 #include <netdb.h>
 #include <spectrum.h>
-#include "io.h"
-#include "protocol.h"
+#include "../../include/io.h"
+#include "../../include/protocol.h"
 
 static int sockfd, bytes, pfd;
 static struct sockaddr_in remoteaddr;

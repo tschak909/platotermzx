@@ -1,7 +1,7 @@
 #ifndef SPLASH_MSX
 #define SPLASH_MSX
 
-#include "protocol.h"
+#include "../include/protocol.h"
 
 const padByte splash[] = 
 {

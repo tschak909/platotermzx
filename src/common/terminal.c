@@ -9,8 +9,8 @@
 
 #include <stdbool.h>
 #include <string.h>
-#include "terminal.h"
-#include "screen.h"
+#include "../include/terminal.h"
+#include "../include/screen.h"
 
 #define true 1
 #define false 0

@@ -11,13 +11,13 @@
 
 #include <conio.h>
 #include <spectrum.h>
-#include "key.h"
-#include "keyboard.h"
-#include "screen.h"
-#include "protocol.h"
-#include "io.h"
-#include "plato_key.h"
-#include "help.h"
+#include "../include/key.h"
+#include "../include/keyboard.h"
+#include "../include/screen.h"
+#include "../include/protocol.h"
+#include "../include/io.h"
+#include "../include/plato_key.h"
+#include "../include/help.h"
 
 #include "sound.h"	//Added sound
 
