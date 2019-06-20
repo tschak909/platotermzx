@@ -10,7 +10,7 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 CFLAGS=+zx -D__SPECTRUM__ -D__UNO__ -DNO_BIT
-LDFLAGS=-lndos -lm -create-app -Cz--screen -Czsrc/ptzx-loading-splash-1.scr #normal tap - Product TAP
+LDFLAGS=-lndos -lm -create-app -Cz--screen -Czsrc/spectrum/rs232/ptzx-loading-splash-1.scr #normal tap - Product TAP
 #LDFLAGS=-lndos -lm -create-app -subtype=turbo -audio #TURBO WAV only - DEV compiler
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)

@@ -1,6 +1,7 @@
 #ifdef __UNO__
 
-#include "zifi.h"
+#include <conio.h>
+#include "../../include/uno/zifi.h"
 int is_connected = 0;
 
 void initWifi()

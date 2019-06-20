@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <spectrum.h>
-#include "io.h"
-#include "protocol.h"
-#include "spectrum/uno/zifi.h"
+#include "../../include/io.h"
+#include "../../include/protocol.h"
+#include "../../include/uno/zifi.h"
 
 static unsigned char inb;
 

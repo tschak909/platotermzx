@@ -2,8 +2,8 @@
 #include <conio.h>
 #include <spectrum.h>
 #include <string.h>
-#include "../../include/connect.h"
-#include "../../include/help.h"
+#include "../include/connect.h"
+#include "../include/help.h"
 
 extern char host_name[32];
 
@@ -26,7 +26,8 @@ void connect(void)
 #endif
 
 #ifdef __UNO__
-#include "uno/zifi.h"
+#include "../include/uno/zifi.h"
+#include "../include/help.h"
 #include <conio.h>
 #include <spectrum.h>
 #include <string.h>
