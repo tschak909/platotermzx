@@ -3,8 +3,9 @@
 #include <string.h>
 #include <rs232.h>
 #include <spectrum.h>
-#include "io.h"
-#include "protocol.h"
+#include "../../include/keyboard.h"
+#include "../../include/io.h"
+#include "../../include/protocol.h"
 
 static unsigned char inb;
 
