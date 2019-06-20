@@ -1,78 +1,33 @@
+#ifdef __SPECTRUM__
 
 #include <graphics.h>
-#ifdef __SPECTRUM__
-#include <spectrum.h>
-#endif
-#ifdef __MSX__
-#include <msx.h>
-#endif
 #include <sound.h>
 #include <stdlib.h>
 #include "screen.h"
 #include "protocol.h"
-#ifdef __PC6001__
-#include <sys/ioctl.h>
-#endif
-unsigned char CharWide=8;
-unsigned char CharHigh=16;
-padPt TTYLoc;
-#ifdef __SPECTRUM__
-long foregroundColor=INK_WHITE;
-long backgroundColor=PAPER_BLACK;
-#endif
 
+extern unsigned char CharWide;
+extern unsigned char CharHigh;
+extern padPt TTYLoc;
 extern padBool FastText; /* protocol.c */
 extern unsigned short scalex[];
 extern unsigned short scaley[];
-
 extern unsigned char font[];
 extern unsigned char fontm23[];
 extern unsigned short fontptr[];
 extern unsigned char FONT_SIZE_X;
 extern unsigned char FONT_SIZE_Y;
+extern char enable_fill;
 
-char enable_fill;
-
-void bx(int x1, int y1, int x2, int y2)
-{
-  int y=0;
-  for (y=y1; y<y2; y++)
-    {
-      undraw(x1,y,x2,y);
-    }
-}
-
-void as(int x1, int y1, int x2, int y2)
-{
-}
+long foregroundColor=INK_WHITE;
+long backgroundColor=PAPER_BLACK;
 
 /**
  * screen_init() - Set up the screen
  */
 void screen_init(void)
 {
-#ifdef __ADAM__
-
-  /* ADAM needs an NMI vector attached for its VDP interrupt... */
-#asm
-    ld      hl,0x45ed
-    ld      (0x66),hl
-#endasm
-
-#endif
-      
-#ifdef __PC6001__
-  int mode = 1;
-  console_ioctl(IOCTL_GENCON_SET_MODE,&mode);
-#endif
   clg();
-}
-
-/**
- * screen_wait(void) - Sleep for approx 16.67ms
- */
-void screen_wait(void)
-{
 }
 
 /**
@@ -80,9 +35,7 @@ void screen_wait(void)
  */
 void screen_beep(void)
 {
-#ifdef __SPECTRUM__
   bit_frequency(.2,440);
-#endif
 }
 
 /**
@@ -91,50 +44,7 @@ void screen_beep(void)
 void screen_clear(void)
 {
   clg();
-#ifdef __SPECTRUM__
   zx_colour(PAPER_BLACK|INK_WHITE);
-#endif
-}
-
-/**
- * screen_block_draw(Coord1, Coord2) - Perform a block fill from Coord1 to Coord2
- */
-void screen_block_draw(padPt* Coord1, padPt* Coord2)
-{
-  if (CurMode==ModeErase || CurMode==ModeInverse)
-    bx(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
-  else
-    bx(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
-}
-
-/**
- * screen_dot_draw(Coord) - Plot a mode 0 pixel
- */
-void screen_dot_draw(padPt* Coord)
-{
-  if (CurMode==ModeErase || CurMode==ModeInverse)
-    unplot(scalex[Coord->x],scaley[Coord->y]);
-  else
-    plot(scalex[Coord->x],scaley[Coord->y]);
-}
-
-/**
- * screen_line_draw(Coord1, Coord2) - Draw a mode 1 line
- */
-void screen_line_draw(padPt* Coord1, padPt* Coord2)
-{
-  unsigned char x1=scalex[Coord1->x];
-  unsigned char x2=scalex[Coord2->x];
-  unsigned char y1=scaley[Coord1->y];
-  unsigned char y2=scaley[Coord2->y];
-
-  unsigned short x,y;
-  unsigned char* aaddr;
-  
-  if (CurMode==ModeErase || CurMode==ModeInverse)
-    undraw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
-  else
-    draw(scalex[Coord1->x],scaley[Coord1->y],scalex[Coord2->x],scaley[Coord2->y]);
 }
 
 /**
@@ -220,9 +130,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   	    {
   	      if (b<0) /* check sign bit. */
 		{
-#ifdef __SPECTRUM__
 		  *zx_pxy2aaddr(x+1,y+1)=foregroundColor;
-#endif
 		  if (mainColor==0)
 		    unplot(x,y);
 		  else
@@ -294,30 +202,24 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 		    {
 		      if (mainColor==0)
 			{
-#ifdef __SPECTRUM__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
-#endif
 			  unplot(*px+1,*py);
 			  unplot(*px,*py+1);
 			  unplot(*px+1,*py+1);
 			}
 		      else
 			{
-#ifdef __SPECTRUM__
 			  *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			  *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			  *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
-#endif
 			  plot(*px+1,*py);
 			  plot(*px,*py+1);
 			  plot(*px+1,*py+1);
 			}
 		    }
-#ifdef __SPECTRUM__
 		  *zx_pxy2aaddr(*px,*py)=foregroundColor;
-#endif
 		  if (mainColor==0)
 		    unplot(*px,*py);
 		  else
@@ -331,30 +233,24 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 			{
 			  if (altColor==0)
 			    {
-#ifdef __SPECTRUM__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
-#endif
 			      unplot(*px+1,*py);
 			      unplot(*px,*py+1);
 			      unplot(*px+1,*py+1);
 			    }
 			  else
 			    {
-#ifdef __SPECTRUM__
 			      *zx_pxy2aaddr(*px+1,*py)=foregroundColor;
 			      *zx_pxy2aaddr(*px,*py+1)=foregroundColor;
 			      *zx_pxy2aaddr(*px+1,*py+1)=foregroundColor;
-#endif
 			      plot(*px+1,*py);
 			      plot(*px,*py+1);
 			      plot(*px+1,*py+1);
 			    }
 			}
-#ifdef __SPECTRUM__
 		      *zx_pxy2aaddr(*px,*py);
-#endif
 		      if (altColor==0)
 			unplot(*px,*py);
 		      else
@@ -380,46 +276,10 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
 }
 
 /**
- * screen_tty_char - Called to plot chars when in tty mode
- */
-void screen_tty_char(padByte theChar)
-{
-  if ((theChar >= 0x20) && (theChar < 0x7F)) {
-    screen_char_draw(&TTYLoc, &theChar, 1);
-    TTYLoc.x += CharWide;
-  }
-  else if ((theChar == 0x0b)) /* Vertical Tab */
-    {
-      TTYLoc.y += CharHigh;
-    }
-  else if ((theChar == 0x08) && (TTYLoc.x > 7))	/* backspace */
-    {
-      TTYLoc.x -= CharWide;
-      /* screen_block_draw(&scalex[TTYLoc.x],&scaley[TTYLoc.y],&scalex[TTYLoc.x+CharWide],&scaley[TTYLoc.y+CharHigh]); */
-    }
-  else if (theChar == 0x0A)			/* line feed */
-    TTYLoc.y -= CharHigh;
-  else if (theChar == 0x0D)			/* carriage return */
-    TTYLoc.x = 0;
-  
-  if (TTYLoc.x + CharWide > 511) {	/* wrap at right side */
-    TTYLoc.x = 0;
-    TTYLoc.y -= CharHigh;
-  }
-  
-  if (TTYLoc.y < 0) {
-    screen_clear();
-    TTYLoc.y=495;
-  }
-
-}
-
-/**
  * screen_foreground - Set foreground
  */
 void screen_foreground(padRGB* theColor)
 {
-#ifdef __SPECTRUM__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;
@@ -456,7 +316,6 @@ void screen_foreground(padRGB* theColor)
     {
       foregroundColor=INK_WHITE;
     }
-#endif
 }
 
 /**
@@ -464,7 +323,6 @@ void screen_foreground(padRGB* theColor)
  */
 void screen_background(padRGB* theColor)
 {
-#ifdef __SPECTRUM__
   unsigned char red=theColor->red;
   unsigned char green=theColor->green;
   unsigned char blue=theColor->blue;
@@ -501,21 +359,6 @@ void screen_background(padRGB* theColor)
     {
       backgroundColor=PAPER_BLACK;
     }
-#endif
 }
 
-/**
- * Flood fill
- */
-void screen_paint(padPt* Coord)
-{
-  if (enable_fill) 
-    fill(scalex[Coord->x],scaley[Coord->y]);
-}
-
-/**
- * screen_done()
- */
-void screen_done(void)
-{
-}
+#endif /* __SPECTRUM__ */

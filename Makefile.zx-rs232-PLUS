@@ -9,7 +9,7 @@ SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-CFLAGS=+zx -D__SPECTRUM__ -D__RS232__
+CFLAGS=+zx -D__SPECTRUM__ -D__SPECTRUM_RS232__
 LDFLAGS=-lndos -lm -lrs232plus -create-app -Cz--screen -Czsrc/ptzx-loading-splash-1.scr #normal tap - Product TAP
 #LDFLAGS=-lndos -lm -lrs232plus -create-app -subtype=turbo -audio #TURBO WAV only - DEV compiler
 
