@@ -4,16 +4,16 @@
 #include <input.h>
 #include <stdint.h>
 #include <stdio.h>
-#include "protocol.h"
-#include "screen.h"
-#include "terminal.h"
-#include "connect.h"
-#include "adam/splash.h"
-#include "help.h"
+#include "../include/protocol.h"
+#include "../include/screen.h"
+#include "../include/terminal.h"
+#include "../include/connect.h"
+#include "../include/adam/splash.h"
+#include "../include/help.h"
 #include <conio.h>
 
-#include "io.h"
-#include "keyboard.h"
+#include "../include/io.h"
+#include "../include/keyboard.h"
 
 unsigned char already_started=0;
 

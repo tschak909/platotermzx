@@ -1,7 +1,7 @@
 #ifndef SPLASH_CPC
 #define SPLASH_CPC
 
-#include "protocol.h" // For padByte
+#include "../include/protocol.h" // For padByte
 
 const padByte splash[]={
 0x1b,
