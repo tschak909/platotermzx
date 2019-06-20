@@ -10,13 +10,13 @@
 #ifdef __MICROBEE__
 
 #include <conio.h>
-#include "key.h"
-#include "keyboard.h"
-#include "screen.h"
-#include "protocol.h"
-#include "io.h"
-#include "plato_key.h"
-#include "help.h"
+#include "../key.h"
+#include "../keyboard.h"
+#include "../screen.h"
+#include "../protocol.h"
+#include "../io.h"
+#include "../plato_key.h"
+#include "../help.h"
 
 #include "sound.h"	//Added sound
 

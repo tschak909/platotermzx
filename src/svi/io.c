@@ -1,8 +1,8 @@
 #ifdef __SVI__
 #include <stdio.h>
 #include <string.h>
-#include "io.h"
-#include "protocol.h"
+#include "../include/io.h"
+#include "../include/protocol.h"
 
 static unsigned char inb;
 

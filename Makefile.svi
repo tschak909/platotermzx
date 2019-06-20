@@ -9,7 +9,7 @@ SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-CFLAGS=+svi -D__SVI__ -DNO_BIT
+CFLAGS=+svi -D__SVI__ -DNO_BIT -DNO_FILL
 LDFLAGS=-lndos -lm -create-app
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)

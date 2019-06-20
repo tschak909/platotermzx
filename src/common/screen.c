@@ -119,8 +119,10 @@ void screen_tty_char(padByte theChar)
  */
 void screen_paint(padPt* Coord)
 {
+#ifndef NO_FILL
   if (enable_fill) 
     fill(scalex[Coord->x],scaley[Coord->y]);
+#endif
 }
 
 /**

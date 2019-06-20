@@ -9,7 +9,7 @@ SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
-CFLAGS=+msx -D__MSX__
+CFLAGS=+msx -D__MSX__ -DNO_FILL
 LDFLAGS=-lm -subtype=msxdos -oplato.com
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)

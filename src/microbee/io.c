@@ -1,8 +1,8 @@
 #ifdef __MICROBEE__
 #include <stdio.h>
 #include <string.h>
-#include "io.h"
-#include "protocol.h"
+#include "../io.h"
+#include "../protocol.h"
 
 static unsigned char inb;
 

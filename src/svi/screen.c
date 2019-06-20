@@ -3,8 +3,8 @@
 #include <graphics.h>
 #include <sound.h>
 #include <stdlib.h>
-#include "screen.h"
-#include "protocol.h"
+#include "../include/screen.h"
+#include "../include/protocol.h"
 
 extern unsigned char CharWide;
 extern unsigned char CharHigh;
