@@ -22,6 +22,7 @@
 #define FMODE_CREATE 0x0E
 
 extern char* ssid;
+extern char* pass;
 extern char is_connected;
 
 void initWifi();

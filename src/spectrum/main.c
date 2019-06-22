@@ -51,8 +51,11 @@ void main(void)
   connect();
 #endif
   io_init();
+
+#ifndef NO_BIT
   bit_play("2A--");  //Ready beep
-  
+#endif
+
   for (;;)
     {
       keyboard_main();
