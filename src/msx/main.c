@@ -28,20 +28,6 @@ void main(void)
   
   help_clear();
   
-  cprintf("Enable graphics fill?(y/n)");
-  while(1)
-  {
-    c = getch();
-    if (c == 'y') {
-      enable_fill = 1;
-      break;
-    }
-    if (c == 'n')  {
-      enable_fill = 0;
-      break;
-    }
-  }
-
   io_init();
   
   for (;;)
