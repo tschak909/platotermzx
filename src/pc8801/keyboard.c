@@ -7,7 +7,7 @@
  * keyboard_base.c - Keyboard functions (base)
  */
 
-#ifdef __ADAM__
+#ifdef __PC8801__
 
 #include <conio.h>
 #include "../include/key.h"
@@ -65,4 +65,4 @@ void keyboard_main(void)
     }
 }
 
-#endif /* __ADAM__ */
+#endif /* __PC8801__ */

@@ -1,4 +1,4 @@
-#ifdef __ADAM__
+#ifdef __PC8801__
 
 #include <graphics.h>
 #include <sound.h>
@@ -271,4 +271,4 @@ void screen_background(padRGB* theColor)
 {
 }
 
-#endif /* __ADAM__ */
+#endif /* __PC8801__ */

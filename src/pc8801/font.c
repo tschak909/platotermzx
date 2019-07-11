@@ -3,7 +3,7 @@
  */
 
 /* ZX Spectrum 4x6 font */
-#ifdef __ADAM__
+#ifdef __PC8801__
 
 unsigned char FONT_SIZE_X=4;
 unsigned char FONT_SIZE_Y=6;

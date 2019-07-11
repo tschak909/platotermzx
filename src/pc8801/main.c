@@ -1,4 +1,4 @@
-#ifdef __ADAM__
+#ifdef __PC8801__
 
 #include <stdbool.h>
 #include <input.h>
@@ -8,7 +8,7 @@
 #include "../include/screen.h"
 #include "../include/terminal.h"
 #include "../include/connect.h"
-#include "../include/adam/splash.h"
+#include "splash.h"
 #include "../include/help.h"
 #include <conio.h>
 
@@ -51,4 +51,4 @@ void main(void)
     }
 }
 
-#endif /* __ADAM__ */
+#endif /* __PC8801__ */

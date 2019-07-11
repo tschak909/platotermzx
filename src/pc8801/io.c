@@ -1,4 +1,4 @@
-#ifdef __ADAM__
+#ifdef __PC8801__
 #include <stdio.h>
 #include <string.h>
 #include "../include/io.h"
@@ -20,5 +20,5 @@ void io_main(void)
 {
 }
 
-#endif /* __ADAM__ */
+#endif /* __PC8801__ */
 
