@@ -323,5 +323,5 @@ void terminal_char_load(padWord charnum, charData theChar)
 void terminal_ready(void)
 {
   TTYLoc.x=TTYLoc.y=0;
-  ShowPLATO("PLATOTerm 1.2 Ready. EXTEND 9 - Print. EXTEND 0 - Help",54);
+  ShowPLATO("PLATOTerm 1.3 Ready. EXTEND 9 - Print. EXTEND 0 - Help",54);
 }
