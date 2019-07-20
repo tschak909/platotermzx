@@ -55,10 +55,7 @@ void main(void)
   
   for (;;)
     {
-      for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
-      {
-	      keyboard_main();
-      }
+	    keyboard_main();
       io_main();
     }
 }

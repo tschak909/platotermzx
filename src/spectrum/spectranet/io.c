@@ -48,10 +48,7 @@ void io_main(void)
     }
   else
     {
-      for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
-	{
-	  keyboard_main();
-	} 
+	    keyboard_main();
     }
   
 }
