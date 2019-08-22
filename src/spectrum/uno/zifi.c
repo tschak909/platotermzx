@@ -2,6 +2,7 @@
 
 #include <conio.h>
 #include "../../include/uno/zifi.h"
+#include "../../include/help.h"
 int is_connected = 0;
 
 void initWifi()
@@ -11,6 +12,18 @@ void initWifi()
     __endasm;
 }
 
+void noWiFiConfigCheck()
+{
+    if (&ssid[0] == 0) {
+        help_clear();
+        cprintf("Enter ssid: ");
+        cgets(&ssid);
+        help_clear();
+        cprintf("Enter password:");
+        cgets(&pass);
+        help_clear();
+    }
+}
 
 void errInit()
 {
@@ -339,6 +352,23 @@ initWifi:
     call uartBegin
     call loadWiFiConfig
 
+    ld hl, cmd_plus
+    call uartWriteStringZ
+    halt
+    halt
+    halt
+    ld hl, cmd_rst
+    call uartWriteStringZ
+
+ rstLp:
+    call uartReadBlocking
+    call pushRing   
+    
+    ld hl, response_rdy
+    call searchRing
+    cp 1
+    jr nz, rstLp
+
     ld hl, cmd_at   ; Disable ECHO. BTW Basic UART test
     call okErrCmd
     and 1
@@ -450,9 +480,10 @@ loadWiFiConfig:
     ld hl, _pass
     ld bc, 80
     call fread
-    pop af
-
+    pop af 
     call fclose
+
+    jp _noWiFiConfigCheck
     ret
 
     ; Pushes A to ring buffer
@@ -514,7 +545,9 @@ ringCmpLp:
     
 ring_buffer: defs 32
 
-cmd_at:      defb 'A', 'T', 'E', '0', 13, 10, 0                  ; Disable echo - less to parse
+cmd_plus:    defb "+++", 0
+cmd_rst:     defb "AT+RST\r\n", 0
+cmd_at:      defb "ATE0\r\n", 0                  ; Disable echo - less to parse
 cmd_mode:    defb "AT+CWMODE_DEF=1\r\n",0	        ; Client mode
 cmd_cmux:    defb "AT+CIPMUX=0\r\n",0              ; Single connection mode
 cmd_cwqap:   defb "AT+CWQAP\r\n",0		            ; Disconnect from AP
@@ -531,16 +564,13 @@ cmd_open1:   defb "AT+CIPSTART=\"TCP\",\"", 0
 cmd_open2:   defb "\",", 0
 cmd_open3:   defb "\r\n", 0
 
+response_rdy:    defb "ready\r\n",0 
 response_ok:     defb "OK",13, 10, 0      ; Sucessful operation
 response_err:    defb "ERROR",13,10,0      ; Failed operation
 response_fail:   defb "FAIL",13,10,0       ; Failed connection to WiFi. For us same as ERROR
 
 _ssid:        defs 80
 _pass:        defs 80
-
-_bytes_avail:	defw 0
-sbyte_buff:     defb 0, 0 
-_output_buffer: defs 2048	;ESP sends not more 1460 bytes, but better have some spaces
 
 send_prompt: defb ">",0
 
