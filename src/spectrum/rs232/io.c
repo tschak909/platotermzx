@@ -34,10 +34,15 @@ void io_main(void)
     }
   else
     {  /* [NO RX - KEY scan] */  
+      in_Pause(10);
+      keyboard_main();
+
+    /*
       for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
-	{
-	  keyboard_main();
-	} 
+      {
+        keyboard_main();
+      } 
+    */
     }
 }
 #endif /* __SPECTRUM_RS232__ */
