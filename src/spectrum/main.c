@@ -33,6 +33,7 @@ void main(void)
   cprintf("Enable graphics fill?(y/n)");
   while(1)
   {
+    in_Pause(1); // Slow this loop
     c = getch();
     if (c == 'y') {
       enable_fill = 1;
