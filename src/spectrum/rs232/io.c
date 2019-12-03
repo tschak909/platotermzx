@@ -8,11 +8,15 @@
 #include "../../include/protocol.h"
 #include "../../include/help.h"
 
+#define rxbuffersize 2048
+#define rxdelay 2 //Small delay after fetching the first character to try and get all the data in one
 
 static unsigned char inb;
-char rxdata[2049];
+char rxdata[rxbuffersize];
+int rxbufferlimit = rxbuffersize;
 static int bytes;
 char io_initialized=0;
+uint_fast8_t relaxbuffer = 0;
 
 void io_init(void)
 {
@@ -22,6 +26,11 @@ void io_init(void)
   char c; 
 
   help_prompt_input("Modem dial? y/n: ");
+
+  rs232_params(RS_BAUD_9600|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
+  rs232_init();
+  io_initialized=1;
+
   while(1)
   {
     in_Pause(1); // Slow this loop
@@ -36,11 +45,6 @@ void io_init(void)
           strcpy(host_name,"IRATA.ONLINE:8005");
         }
       help_clear();
-
-
-      rs232_params(RS_BAUD_9600|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
-      rs232_init();
-      io_initialized=1;
 
       io_send_byte('a');
       io_send_byte('t');
@@ -57,15 +61,10 @@ void io_init(void)
     else if (c == 'n')  
     {
       help_clear();
-      rs232_params(RS_BAUD_9600|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
-      rs232_init();
-      io_initialized=1;
       break;
     }
   }
 
-
-  
 }
 
 void io_send_byte(unsigned char b)
@@ -77,34 +76,74 @@ void io_send_byte(unsigned char b)
 }
 
 void io_main(void)
-{  // NEW BUFFERED SERIAL CONNECTION (2048)
+{ // NEW ADAPTIVE BUFFERED SERIAL CONNECTION !!
   if (rs232_get(&inb) != RS_ERR_NO_DATA)  	// *IRQ-OFF (RECEIVING DATA)
-    {	/* [RX - Display] */ 	
-
+  {	/* [RX - Display] */ 	
     bytes = 0;
-    do
-    {
-      rxdata[bytes] = inb;
-      bytes++;
-    } while (rs232_get(&inb) != RS_ERR_NO_DATA & bytes<2048);
-    
-      ShowPLATO(rxdata,bytes);
-      //ShowPLATO(&inb,1);  // ORIGINAL
-    }
-  else
-    {  /* [NO RX - KEY scan] */  
-    
-    // CHANGE THE NO RX TIMING
+    rxdata[bytes] = inb;
+    bytes++;
 
-//    in_Pause(1);
-//    keyboard_main();
-  
-      for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
+    in_Pause(rxdelay);  // Hold off to get a buffer load
+
+    // Mark screen while RX in progress
+	  gotoxy(0,0);
+    if(rxbufferlimit==rxbuffersize)		printf("X");  // BIG buffer active
+    else		                          printf("O");  // small buffer active
+
+
+    while (inb != RS_ERR_NO_DATA && bytes<rxbufferlimit)
+    {// LOOP until no data or Buffer is FULL
+	    keyboard_main();  // On the off chance some pushes a key and we have the IRQs enabled...
+
+      if (rs232_get(&inb) != RS_ERR_NO_DATA)
       {
-        in_Pause(1);
-        keyboard_main();
-      } 
-    
+        rxdata[bytes] = inb;
+        bytes++;
+      }
+      else
+      {
+        inb = RS_ERR_NO_DATA;
+      }
+    } 
+
+    //  ADAPTIVE BUFFERING -- Try to not partially load pages, but if we blast the buffer in roses stream using a small buffer
+    if(inb != RS_ERR_NO_DATA || (bytes > 15 && bytes < 20))
+    {//  Buffer flooded OR Buffer starved, switch to small buffer
+      rxbufferlimit = 20;
     }
+    else
+    {//  Buffer not flooded, switch to big buffer
+      rxbufferlimit = rxbuffersize;
+    }
+    
+    // Clear the RX data mark
+    gotoxy(0,0);
+    printf(" ");
+
+    
+    ShowPLATO(rxdata,bytes);
+    //ShowPLATO(&inb,1);  // ORIGINAL
+
+    // Display buffer usage for DEBUG
+/*
+    gotoxy(0,23);
+    printf("[%4d]",bytes);
+    //printf("[%4d][%4d]",bytes,rxbufferlimit);
+*/
+  }
+  else
+  {  /* [NO RX - KEY scan] */  
+  
+    // RELAX the adaptive buffer on count of 3 no data passes
+    if(relaxbuffer<3)   {relaxbuffer++;}
+    else                {relaxbuffer=0;      rxbufferlimit = rxbuffersize;}
+
+    for(int Kscan=0;Kscan<10;Kscan++)  
+    {// THIS IS THE MAIN KEYBOARD SCAN WINDOW NOW
+      in_Pause(1);
+      keyboard_main();
+    } 
+  
+  }
 }
 #endif /* __SPECTRUM_RS232__ */

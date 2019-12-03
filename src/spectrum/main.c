@@ -66,7 +66,7 @@ void main(void)
       }
       */
       io_main();
-	    in_Pause(1);
+	    //in_Pause(1);
       keyboard_main();
     }
 }
