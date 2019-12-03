@@ -81,7 +81,9 @@ void keyboard_out_tty(char ch)
 void keyboard_main(void)
 {
   ch=getk();
-  if (ch!=0x00)
+  do
+  {
+    if (ch!=0x00)
     {
       keyboard_click(); // maybe something better? ;) -thom
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.
@@ -119,7 +121,9 @@ void keyboard_main(void)
       }
     }
     ch=0x00;  // be clean and clear it
-    //  ELSE here for No Keypress events
+      //  ELSE here for No Keypress events
+    ch=getk();
+  } while (ch!=0x00);
 }
 
 #endif /* __SPECTRUM__ */
