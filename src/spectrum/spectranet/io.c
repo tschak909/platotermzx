@@ -49,22 +49,17 @@ void io_main(void)
       // Clear the RX data mark
       //gotoxy(0,0);    printf(" ");
 
-      ShowPLATO(rxdata,bytes);
+      if(bytes!=0)  // Seems to stop some bugs with the network stopping
+        ShowPLATO(rxdata,bytes);
     }
   else
     {
-// TEST 0 *TOO Fast
-/*      
-      keyboard_main();
-*/
 
-// TEST 1  !Works
-
-      in_Pause(2);
+      in_Pause(10);  //This time drops to 0 on key push
       keyboard_main();
 
 
-//  TEST 2
+//  This is another way to do it and get more Keys sent before RX
 /*
       for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
       {// THIS IS THE MAIN KEYBOARD SCAN WINDOW NOW  
@@ -73,7 +68,7 @@ void io_main(void)
       } 
 */
 
-//  ORIGINAL
+//  ORIGINAL  -- Served us well but not required I have grown
 /*
       for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
       {
