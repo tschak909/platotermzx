@@ -13,8 +13,6 @@
 #define XON  0x11
 #define XOFF 0x13
 
-extern char rxdata[1024];
-
 /**
  * io_init() - Set-up the I/O
  */
