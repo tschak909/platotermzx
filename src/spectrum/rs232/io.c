@@ -8,7 +8,8 @@
 #include "../../include/protocol.h"
 
 static unsigned char inb;
-
+char rxdata[2049];
+static int bytes;
 char io_initialized=0;
 
 void io_init(void)
@@ -27,22 +28,34 @@ void io_send_byte(unsigned char b)
 }
 
 void io_main(void)
-{
+{  // NEW BUFFERED SERIAL CONNECTION (2048)
   if (rs232_get(&inb) != RS_ERR_NO_DATA)  	// *IRQ-OFF (RECEIVING DATA)
     {	/* [RX - Display] */ 	
-      ShowPLATO(&inb,1);
+
+    bytes = 0;
+    do
+    {
+      rxdata[bytes] = inb;
+      bytes++;
+    } while (rs232_get(&inb) != RS_ERR_NO_DATA & bytes<2048);
+    
+      ShowPLATO(rxdata,bytes);
+      //ShowPLATO(&inb,1);  // ORIGINAL
     }
   else
     {  /* [NO RX - KEY scan] */  
-      in_Pause(10);
-      keyboard_main();
+    
+    // CHANGE THE NO RX TIMING
 
-    /*
-      for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
+//    in_Pause(1);
+//    keyboard_main();
+  
+      for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
       {
+        in_Pause(1);
         keyboard_main();
       } 
-    */
+    
     }
 }
 #endif /* __SPECTRUM_RS232__ */

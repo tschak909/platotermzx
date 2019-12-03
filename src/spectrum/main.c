@@ -57,7 +57,7 @@ void main(void)
 #endif
 
   for (;;)
-    {
+    {  // CHANGE THE MAIN LOOP
       /*
       for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
       {
@@ -65,6 +65,8 @@ void main(void)
       }
       */
       io_main();
+	    in_Pause(1);
+      keyboard_main();
     }
 }
 

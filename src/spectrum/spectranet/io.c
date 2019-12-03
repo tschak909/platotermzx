@@ -12,7 +12,7 @@
 
 static int sockfd, bytes, pfd;
 static struct sockaddr_in remoteaddr;
-char rxdata[1024];
+char rxdata[2049];
 struct hostent *he;
 char host_name[32];
 
@@ -43,14 +43,25 @@ void io_main(void)
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
-      bytes=recv(sockfd,rxdata,1,0);
-      ShowPLATO(rxdata,1);
+      bytes=recv(sockfd,rxdata,2048,0);
+      ShowPLATO(rxdata,bytes);
     }
   else
     {
+/*  TEST 1
       in_Pause(1);
       keyboard_main();
-/*
+*/
+
+//  BEST
+      for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
+      {
+        in_Pause(1);
+        keyboard_main();
+      } 
+
+
+/* ORIGINAL
       for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
       {
         keyboard_main();
