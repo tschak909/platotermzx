@@ -43,7 +43,12 @@ void io_main(void)
   pfd=poll_fd(sockfd);
   if (pfd & POLLIN)
     {
+      // RX data mark
+      //gotoxy(0,0);    printf("X");
       bytes=recv(sockfd,rxdata,2048,0);
+      // Clear the RX data mark
+      //gotoxy(0,0);    printf(" ");
+
       ShowPLATO(rxdata,bytes);
     }
   else
@@ -54,19 +59,19 @@ void io_main(void)
 */
 
 // TEST 1  !Works
-/*
+
       in_Pause(2);
       keyboard_main();
-*/
+
 
 //  TEST 2
-
-      for(int Kscan=0;Kscan<5;Kscan++)  //Extra keyboard scanning					
+/*
+      for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
       {// THIS IS THE MAIN KEYBOARD SCAN WINDOW NOW  
         in_Pause(1);
         keyboard_main();
       } 
-
+*/
 
 //  ORIGINAL
 /*
