@@ -28,6 +28,7 @@ void io_init(void)
   help_prompt_input("Modem dial? y/n: ");
 
   rs232_params(RS_BAUD_9600|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
+  //rs232_params(RS_BAUD_19200|RS_STOP_1|RS_BITS_8,RS_PAR_NONE);  //  Bauds tested 1200[/] 2400[/] 4800[/] 9600[/] 19200[X] 38400[X] 57600[] 115200[] 
   rs232_init();
   io_initialized=1;
 
@@ -46,10 +47,20 @@ void io_init(void)
         }
       help_clear();
 
-      io_send_byte('a');
-      io_send_byte('t');
-      io_send_byte('d');
+      io_send_byte('A');
+      io_send_byte('T');
       io_send_byte(' ');
+
+      //Push CTS/RTS on
+      io_send_byte('&');
+      io_send_byte('K');
+      io_send_byte('3');
+      io_send_byte(' ');
+
+      io_send_byte('D');
+      io_send_byte('T');
+      io_send_byte(' ');
+
       int i=0;
       do
       {
@@ -86,10 +97,9 @@ void io_main(void)
     in_Pause(rxdelay);  // Hold off to get a buffer load
 
     // Mark screen while RX in progress
-	  gotoxy(0,0);
-    if(rxbufferlimit==rxbuffersize)		printf("X");  // BIG buffer active
-    else		                          printf("O");  // small buffer active
-
+//	  gotoxy(0,0);
+//    if(rxbufferlimit==rxbuffersize)		printf("X");  // BIG buffer active
+//    else		                          printf("O");  // small buffer active
 
     while (inb != RS_ERR_NO_DATA && bytes<rxbufferlimit)
     {// LOOP until no data or Buffer is FULL
@@ -107,7 +117,7 @@ void io_main(void)
     } 
 
     //  ADAPTIVE BUFFERING -- Try to not partially load pages, but if we blast the buffer in roses stream using a small buffer
-    if(inb != RS_ERR_NO_DATA || (bytes > 15 && bytes < 20))
+    if(inb != RS_ERR_NO_DATA || (bytes > 5 && bytes < 20))
     {//  Buffer flooded OR Buffer starved, switch to small buffer
       rxbufferlimit = 20;
     }
@@ -117,8 +127,7 @@ void io_main(void)
     }
     
     // Clear the RX data mark
-    gotoxy(0,0);
-    printf(" ");
+//    gotoxy(0,0);    printf(" ");
 
     
     ShowPLATO(rxdata,bytes);
