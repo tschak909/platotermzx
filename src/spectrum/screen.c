@@ -118,6 +118,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   
   for (i=0;i<count;++i)
     {
+      keyboard_main();  // CHECK THE KEYBOARD HERE WHILE QUICK DRAWING
       a=*ch;
       ++ch;
       a+=offset;
@@ -176,6 +177,7 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   
   for (i=0;i<count;++i)
     {
+      keyboard_main();  // CHECK KEYBOARD HERE WHILE DRAWING
       a=*ch;
       ++ch;
       a+=offset;
