@@ -48,20 +48,28 @@ void io_main(void)
     }
   else
     {
-/*  TEST 1
-      in_Pause(1);
+// TEST 0 *TOO Fast
+/*      
       keyboard_main();
 */
 
-//  BEST
-      for(int Kscan=0;Kscan<10;Kscan++)  //Extra keyboard scanning					
+// TEST 1  !Works
+/*
+      in_Pause(2);
+      keyboard_main();
+*/
+
+//  TEST 2
+
+      for(int Kscan=0;Kscan<5;Kscan++)  //Extra keyboard scanning					
       {
         in_Pause(1);
         keyboard_main();
       } 
 
 
-/* ORIGINAL
+//  ORIGINAL
+/*
       for(int Kscan=0;Kscan<30;Kscan++)  //Extra keyboard scanning					
       {
         keyboard_main();
