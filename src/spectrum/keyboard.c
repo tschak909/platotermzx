@@ -80,45 +80,50 @@ void keyboard_out_tty(char ch)
  */
 void keyboard_main(void)
 {
-  ch=getk();	
-  if (ch!=0x00)
+  ch=getk();
+  do
+  {
+    if (ch!=0x00)
     {
       keyboard_click(); // maybe something better? ;) -thom
       if (is_extend==0 && ch==0x0e) // EXTEND pressed.
-	{
-	  zx_border(INK_GREEN);
-	  is_extend=1;
-	}
+      {
+        zx_border(INK_GREEN);
+        is_extend=1;
+      }
       else if (TTY)
-	{
-	  keyboard_out_tty(ch);	// *IRQ-OFF  (SENDING DATA)
-	}
+      {
+        keyboard_out_tty(ch);	// *IRQ-OFF  (SENDING DATA)
+      }
       else if (is_extend==1 && ch==0x30)
-	{
-	  is_extend=0;
-	  help_run();
-	}
+      {
+        is_extend=0;
+        help_run();
+      }
       else if (is_extend==1 && ch==0x39)
-	{
-	  zx_border(INK_MAGENTA);
-	  zx_hardcopy();
-	  zx_border(INK_BLACK);
-	  is_extend=0;
-	}
+      {
+        zx_border(INK_MAGENTA);
+        zx_hardcopy();
+        zx_border(INK_BLACK);
+        is_extend=0;
+      }
       else if (is_extend==1)
-	{
-	  zx_border(INK_GREEN);
-	  keyboard_out(extend_key_to_pkey[ch]);
-	  is_extend=0;
-	  zx_border(INK_BLACK);
-	}
+      {
+        zx_border(INK_GREEN);
+        keyboard_out(extend_key_to_pkey[ch]);
+        is_extend=0;
+        zx_border(INK_BLACK);
+      }
       else
-	{
-	  zx_border(INK_BLACK);
-	  keyboard_out(key_to_pkey[ch]);
-	}
+      {
+        zx_border(INK_BLACK);
+        keyboard_out(key_to_pkey[ch]);
+      }
     }
-  //  ELSE here for No Keypress events
+    ch=0x00;  // be clean and clear it
+      //  ELSE here for No Keypress events
+    ch=getk();
+  } while (ch!=0x00);
 }
 
 #endif /* __SPECTRUM__ */

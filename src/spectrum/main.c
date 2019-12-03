@@ -33,6 +33,7 @@ void main(void)
   cprintf("Enable graphics fill?(y/n)");
   while(1)
   {
+    in_Pause(1); // Slow this loop
     c = getch();
     if (c == 'y') {
       enable_fill = 1;
@@ -57,11 +58,21 @@ void main(void)
 #endif
 
   for (;;)
-    {
+    {  
+      /* CHANGES TO THE MAIN LOOP
+          We now only check the keyboard on NO RX data 
+          or while drawing on the screen, 
+          except during flood fills.
+      */
+      
+
+      #ifdef __UNO__  //Not tuned the UNO sorry...
       for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
       {
 	      keyboard_main();
       }
+      #endif
+      
       io_main();
     }
 }

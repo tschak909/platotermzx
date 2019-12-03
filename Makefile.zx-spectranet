@@ -1,6 +1,6 @@
-TARGET_EXEC ?= plato.bin
+TARGET_EXEC ?= platoSNET.bin
 
-BUILD_DIR ?= ./build
+BUILD_DIR ?= ./build-SNET
 SRC_DIRS ?= ./src
 
 CC=zcc
@@ -10,7 +10,10 @@ OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:.o=.d)
 
 CFLAGS=+zx -D__SPECTRUM__ -D__SPECTRANET__ -Iinclude -I../include -I../../include
-LDFLAGS=-lndos -llibsocket -lm -create-app
+LDFLAGS=-O2 -lndos -llibsocket -lm -create-app 
+#LDFLAGS=-O2 -lndos -llibsocket -lm -create-app -subtype=turbo -audio #TURBO WAV only - DEV compiler
+
+
 
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
