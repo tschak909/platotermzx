@@ -975,8 +975,10 @@ ShowPLATO (padByte *buff, unsigned short count)
       EscFlag = (theChar == 0x1B);
       lastChar=rawChar;
     }
-    // CHECK THE KEYBOARD WHILE PROCESSING THE BUFFER
-    keyboard_main();
+    
+    #ifdef __SPECTRUM__
+    keyboard_main();  // Spectrum additional keyboard checks when processing rxbuffer
+    #endif
   }
   
   if (charCount > 0)

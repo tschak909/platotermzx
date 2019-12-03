@@ -118,7 +118,10 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   
   for (i=0;i<count;++i)
     {
-      keyboard_main();  // CHECK THE KEYBOARD HERE WHILE QUICK DRAWING
+      #ifdef __SPECTRUM__
+      keyboard_main();  // Spectrum additional keyboard checks when processing rxbuffer
+      #endif
+      
       a=*ch;
       ++ch;
       a+=offset;
@@ -177,7 +180,10 @@ void screen_char_draw(padPt* Coord, unsigned char* ch, unsigned char count)
   
   for (i=0;i<count;++i)
     {
-      keyboard_main();  // CHECK KEYBOARD HERE WHILE DRAWING
+      #ifdef __SPECTRUM__
+      keyboard_main();  // Spectrum additional keyboard checks when processing rxbuffer
+      #endif
+
       a=*ch;
       ++ch;
       a+=offset;
