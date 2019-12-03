@@ -24,8 +24,6 @@
 extern padBool TTY;
 static unsigned char ch;
 unsigned char is_extend=0;  //deleted static is used in IO.C now for Rasta bars
-static int loopKeyScan;    // Used to loop the keyboard scanning
-
 
 /**
  * A simple key press feedback.
@@ -82,24 +80,7 @@ void keyboard_out_tty(char ch)
  */
 void keyboard_main(void)
 {
-  if(strlen(rxdata) > 50)
-  {
-    loopKeyScan = 0;
-  }
-  else if(strlen(rxdata) > 0)
-  {
-    loopKeyScan = 10;
-  }
-  else
-  {
-    loopKeyScan = 20;
-  }
-  
-  do
-  {
-    ch=getk();
-  } while (--loopKeyScan > 0 && ch==0x00);
-
+  ch=getk();
   if (ch!=0x00)
     {
       keyboard_click(); // maybe something better? ;) -thom
