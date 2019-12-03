@@ -58,16 +58,22 @@ void main(void)
 #endif
 
   for (;;)
-    {  // CHANGE THE MAIN LOOP
-      /*
+    {  
+      /* CHANGES TO THE MAIN LOOP
+          We now only check the keyboard on NO RX data 
+          or while drawing on the screen, 
+          except during flood fills.
+      */
+      
+
+      #ifdef __UNO__  //Not tuned the UNO sorry...
       for(int Kscan=0;Kscan<20;Kscan++)  //Keyboard scanning loop		
       {
 	      keyboard_main();
       }
-      */
+      #endif
+      
       io_main();
-	    //in_Pause(1);
-      keyboard_main();
     }
 }
 
