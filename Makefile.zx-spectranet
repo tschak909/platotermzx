@@ -11,6 +11,7 @@ DEPS := $(OBJS:.o=.d)
 
 CFLAGS=+zx -D__SPECTRUM__ -D__SPECTRANET__ -Iinclude -I../include -I../../include
 LDFLAGS=-O2 -lndos -llibsocket -lm -create-app 
+#LDFLAGS=-O2 -lndos -llibsocket -lm -create-app -subtype=turbo -audio #TURBO WAV only - DEV compiler
 
 
 
