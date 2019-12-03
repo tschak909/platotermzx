@@ -62,7 +62,7 @@ void io_main(void)
 //  TEST 2
 
       for(int Kscan=0;Kscan<5;Kscan++)  //Extra keyboard scanning					
-      {
+      {// THIS IS THE MAIN KEYBOARD SCAN WINDOW NOW  
         in_Pause(1);
         keyboard_main();
       } 
