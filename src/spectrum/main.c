@@ -21,6 +21,7 @@ unsigned char already_started=0;
 
 void main(void)
 {
+  bpoke(0x5C3B, bpeek(0x5C3B) | 0x8); /*Alistair's workaround to autoboot key mode issue */
   char c; 
   zx_border(INK_BLACK);  //Tidy up the borders on start up
   screen_init();
